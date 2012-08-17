@@ -20,8 +20,14 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -70,8 +76,18 @@ public class AppsCustomizeTabHost extends TabHost implements LauncherTransitiona
 
         // Preferences
         mFadeScrollingIndicator = PreferencesProvider.Interface.Drawer.Indicator.getFadeScrollingIndicator(context);
+        
+        //Pekall LK  set app list background alpha
+        setBackgroundAsWallPaper(context);
     }
-
+    
+    private void setBackgroundAsWallPaper(Context context) {
+		WallpaperManager wallpaperManager = WallpaperManager
+				.getInstance(context);
+		Drawable wallpaperDrawable = wallpaperManager.getDrawable();
+     	setBackgroundDrawable(wallpaperDrawable);
+    }
+    
     /**
      * Convenience methods to select specific tabs.  We want to set the content type immediately
      * in these cases, but we note that we still call setCurrentTabByTag() so that the tab view

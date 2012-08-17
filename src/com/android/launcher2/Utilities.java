@@ -25,11 +25,17 @@ import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
+import android.graphics.LinearGradient;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PaintFlagsDrawFilter;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.TableMaskFilter;
+import android.graphics.Bitmap.Config;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PaintDrawable;
@@ -38,7 +44,7 @@ import android.util.DisplayMetrics;
 /**
  * Various utilities shared amongst the Launcher's classes.
  */
-final class Utilities {
+public final class Utilities {
     private static final String TAG = "Launcher.Utilities";
 
     private static int sIconWidth = -1;
@@ -65,7 +71,7 @@ final class Utilities {
      * icon bitmaps that are stored in the database (which were 74x74 pixels at hdpi size)
      * to the proper size (48dp)
      */
-    static Bitmap createIconBitmap(Bitmap icon, Context context) {
+    public static Bitmap createIconBitmap(Bitmap icon, Context context) {
         int textureWidth = sIconTextureWidth;
         int textureHeight = sIconTextureHeight;
         int sourceWidth = icon.getWidth();
@@ -88,7 +94,7 @@ final class Utilities {
     /**
      * Returns a bitmap suitable for the all apps view.
      */
-    static Bitmap createIconBitmap(Drawable icon, Context context) {
+    public static Bitmap createIconBitmap(Drawable icon, Context context) {
         synchronized (sCanvas) { // we share the statics :-(
             if (sIconWidth == -1) {
                 initStatics(context);
@@ -213,4 +219,77 @@ final class Utilities {
         sDisabledPaint.setColorFilter(new ColorMatrixColorFilter(cm));
         sDisabledPaint.setAlpha(0x88);
     }
+    
+	public static void drawSelectedAllAppsBitmap(Canvas dest, int scrollX,
+			int scrollY, int destWidth, int destHeight, int paddingLeft,
+			int paddingTop, boolean pressed, Bitmap src) {
+		synchronized (sCanvas) { // we share the statics :-(
+			if (sIconWidth == -1) {
+				// We can't have gotten to here without src being initialized,
+				// which
+				// comes from this file already. So just assert.
+				// initStatics(context);
+				throw new RuntimeException(
+						"Assertion failed: Utilities not initialized");
+			}
+
+			int[] xy = new int[2];
+			Bitmap mask = src.extractAlpha(sBlurPaint, xy);
+
+			float px = (destWidth - mask.getWidth()) / 2;
+			float py = paddingTop - (mask.getHeight() - src.getHeight()) / 2;
+
+			if ((scrollX | scrollY) == 0) {
+				dest.drawBitmap(mask, px, py, pressed ? sGlowColorPressedPaint
+						: sGlowColorFocusedPaint);
+			} else {
+				dest.translate(scrollX, scrollY);
+				dest.drawBitmap(mask, px, py, pressed ? sGlowColorPressedPaint
+						: sGlowColorFocusedPaint);
+				dest.translate(-scrollX, -scrollY);
+			}
+
+			mask.recycle();
+		}
+	}
+	
+	public static void setContrastTranslateOnly(ColorMatrix cm, float contrast) {
+		float scale = contrast + 1.f;
+		float translate = (-.5f * scale + .5f) * 255.f;
+		cm.set(new float[] { 1, 0, 0, 0, translate, 0, 1, 0, 0, translate, 0,
+				0, 1, 0, translate, 0, 0, 0, 1, 0 });
+	}
+	
+	public static Drawable tintThePicture(Context context, Drawable d,
+			int reflectionHeight) {
+		if (reflectionHeight == 0 || d == null) {
+			return d;
+		}
+		BitmapDrawable mD = (BitmapDrawable) d;
+		final int width = mD.getIntrinsicWidth();
+		final int height = mD.getIntrinsicHeight();
+
+		Matrix matrix = new Matrix();
+		matrix.preScale(1, -1);
+
+		Bitmap reflectionImage = Bitmap.createBitmap(mD.getBitmap(), 0, height
+				- reflectionHeight, width, reflectionHeight, matrix, false);
+		Bitmap bitmapWithReflection = Bitmap.createBitmap(width,
+				(height + reflectionHeight), Config.ARGB_8888);
+
+		Canvas canvas = new Canvas(bitmapWithReflection);
+		canvas.drawBitmap(mD.getBitmap(), 0, 0, null);
+		canvas.drawBitmap(reflectionImage, 0, height, null);
+
+		Paint paint = new Paint();
+		LinearGradient shader = new LinearGradient(0, width, 0,
+				bitmapWithReflection.getHeight(), 0x70ffffff, 0x00ffffff,
+				TileMode.CLAMP);
+		paint.setShader(shader);
+		paint.setXfermode(new PorterDuffXfermode(Mode.DST_IN));
+		canvas.drawRect(0, height, width, bitmapWithReflection.getHeight(),
+				paint);
+
+		return new BitmapDrawable(context.getResources(), bitmapWithReflection);
+	}
 }

@@ -21,6 +21,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.app.WallpaperManager;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProviderInfo;
 import android.content.ComponentName;
@@ -34,11 +35,13 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.MaskFilter;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.TableMaskFilter;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Process;
@@ -305,7 +308,13 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
         if (!mShowScrollingIndicator) {
             disableScrollingIndicator();
         }
+        
+        //Pekall LK  set app list background as wallpaper
+        setBackgroundResource(android.R.color.transparent);
     }
+    
+
+    
 
     @Override
     protected void init() {

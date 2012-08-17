@@ -16,6 +16,15 @@
 
 package com.android.launcher2;
 
+import java.lang.ref.WeakReference;
+import java.net.URISyntaxException;
+import java.text.Collator;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+
 import android.app.SearchManager;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProviderInfo;
@@ -48,15 +57,7 @@ import android.os.SystemClock;
 import android.util.Log;
 
 import com.android.launcher2.InstallWidgetReceiver.WidgetMimeTypeHandlerData;
-
-import java.lang.ref.WeakReference;
-import java.net.URISyntaxException;
-import java.text.Collator;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
+import com.android.launcher2.theme.ThemePackageManager;
 
 /**
  * Maintains in-memory state of the Launcher. It is expected that there should be only one
@@ -150,6 +151,9 @@ public class LauncherModel extends BroadcastReceiver {
         final Resources res = app.getResources();
         Configuration config = res.getConfiguration();
         mPreviousConfigMcc = config.mcc;
+        
+        //Pekall LK
+        mThemePackageManager = new ThemePackageManager();
     }
 
     public Bitmap getFallbackIcon() {
@@ -586,6 +590,10 @@ public class LauncherModel extends BroadcastReceiver {
                 return;
             }
 
+            //Pekall LK
+            mThemePackageManager.updateTheme(context, intent);
+            
+            
             if (Intent.ACTION_PACKAGE_CHANGED.equals(action)) {
                 op = PackageUpdatedTask.OP_UPDATE;
             } else if (Intent.ACTION_PACKAGE_REMOVED.equals(action)) {
@@ -847,6 +855,12 @@ public class LauncherModel extends BroadcastReceiver {
                     loadAndBindWorkspace();
                 }
 
+                //Pekall LK
+    			if (!mThemePackageManager.isLoadedThemePackage()) {
+    				mThemePackageManager.refreshThemePackage(mContext);
+    			}
+                
+                
                 // Restore the default thread priority after we are done loading items
                 synchronized (mLock) {
                     android.os.Process.setThreadPriority(Process.THREAD_PRIORITY_DEFAULT);
@@ -2028,4 +2042,35 @@ public class LauncherModel extends BroadcastReceiver {
             Log.d(TAG, "mLoaderTask=null");
         }
     }
+    
+    //Pekall LK
+	public void reset(Context context) {
+		synchronized (this) {
+			mAllAppsLoaded = mWorkspaceLoaded = false;
+		}
+		boolean runLoader = true;
+		if (mCallbacks != null) {
+			Callbacks callbacks = mCallbacks.get();
+			if (callbacks != null) {
+				// If they're paused, we can skip loading, because they'll do it
+				// again anyway
+				if (callbacks.setLoadOnResume()) {
+					runLoader = false;
+				}
+			}
+		}
+		if (runLoader) {
+			startLoader(mApp, false);
+		}
+	}
+	
+	
+	private ThemePackageManager mThemePackageManager;
+	
+	public ThemePackageManager getThemePackageManager(Context context) {
+		if (!mThemePackageManager.isLoadedThemePackage()) {
+			mThemePackageManager.refreshThemePackage(context);
+		}
+		return mThemePackageManager;
+	}
 }

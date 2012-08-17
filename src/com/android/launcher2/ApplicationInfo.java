@@ -30,37 +30,37 @@ import java.util.HashMap;
 /**
  * Represents an app in AppsCustomizeView.
  */
-class ApplicationInfo extends ItemInfo {
+public class ApplicationInfo extends ItemInfo {
     private static final String TAG = "Launcher.ApplicationInfo";
 
     /**
      * The application name.
      */
-    CharSequence title;
+    public CharSequence title;
 
     /**
      * The intent used to start the application.
      */
-    Intent intent;
+    public Intent intent;
 
     /**
      * A bitmap version of the application icon.
      */
-    Bitmap iconBitmap;
+    public Bitmap iconBitmap;
 
     /**
      * The time at which the app was first installed.
      */
-    long firstInstallTime;
+    public long firstInstallTime;
 
-    ComponentName componentName;
+    public ComponentName componentName;
 
     static final int DOWNLOADED_FLAG = 1;
     static final int UPDATED_SYSTEM_APP_FLAG = 2;
 
     int flags = 0;
 
-    ApplicationInfo() {
+    public ApplicationInfo() {
         itemType = LauncherSettings.BaseLauncherColumns.ITEM_TYPE_SHORTCUT;
     }
 

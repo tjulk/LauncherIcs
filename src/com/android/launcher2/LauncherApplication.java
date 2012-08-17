@@ -18,6 +18,7 @@ package com.android.launcher2;
 
 import android.app.Application;
 import android.app.SearchManager;
+import android.app.WallpaperManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -25,8 +26,12 @@ import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.database.ContentObserver;
 import android.os.Handler;
+import android.util.Log;
 
+import java.io.IOException;
 import java.lang.ref.WeakReference;
+
+import com.android.launcher2.preference.PreferencesProvider;
 
 public class LauncherApplication extends Application {
     public LauncherModel mModel;
@@ -38,7 +43,19 @@ public class LauncherApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        
+        //Pekall LK
+		if (PreferencesProvider.Interface.General.isFistLauncherFlag(this)) {
+			PreferencesProvider.Interface.General.clearFirstLaunchFlag(this);
+			try {
+				WallpaperManager wpm = (WallpaperManager) getSystemService(WALLPAPER_SERVICE);
+				wpm.setResource(R.drawable.default_wallpaper);
+			} catch (IOException e) {
+				Log.e("LauncherApplication", "Failed to set wallpaper: " + e);
+			}
+		}
+        
+        
         // set sIsScreenXLarge and sScreenDensity *before* creating icon cache
         sIsScreenLarge = getResources().getConfiguration().smallestScreenWidthDp >= 600;
         sScreenDensity = getResources().getDisplayMetrics().density;
@@ -103,7 +120,7 @@ public class LauncherApplication extends Application {
         return mIconCache;
     }
 
-    LauncherModel getModel() {
+    public LauncherModel getModel() {
         return mModel;
     }
 
