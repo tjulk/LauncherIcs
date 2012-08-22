@@ -17,6 +17,7 @@
 package com.android.launcher2;
 
 import com.android.launcher2.R;
+import com.android.launcher2.theme.ThemeSettings;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -90,7 +91,11 @@ public class Cling extends FrameLayout {
             mDismissed = false;
 
             Resources r = getContext().getResources();
-            mPunchThroughGraphic = r.getDrawable(R.drawable.cling);
+            
+            //Pekall LK theme image
+            //mPunchThroughGraphic = r.getDrawable(R.drawable.cling);
+            mPunchThroughGraphic = ThemeSettings.getDrawable(getContext(), R.drawable.cling);
+            
             mPunchThroughGraphicCenterRadius =
                 r.getDimensionPixelSize(R.dimen.clingPunchThroughGraphicCenterRadius);
             mAppIconSize = r.getDimensionPixelSize(R.dimen.app_icon_size);
@@ -191,16 +196,28 @@ public class Cling extends FrameLayout {
                 if (mDrawIdentifier.equals(WORKSPACE_PORTRAIT) ||
                     mDrawIdentifier.equals(WORKSPACE_LANDSCAPE) ||
                     mDrawIdentifier.equals(WORKSPACE_LARGE)) {
-                    mBackground = getResources().getDrawable(R.drawable.bg_cling1);
+                    //Pekall LK theme image
+                	//mBackground = getResources().getDrawable(R.drawable.bg_cling1);
+                	mBackground = ThemeSettings.getDrawable(mLauncher, R.drawable.bg_cling1);                    
+                    
                 } else if (mDrawIdentifier.equals(ALLAPPS_PORTRAIT) ||
                         mDrawIdentifier.equals(ALLAPPS_LANDSCAPE) ||
                         mDrawIdentifier.equals(ALLAPPS_LARGE)) {
-                    mBackground = getResources().getDrawable(R.drawable.bg_cling2);
+                	
+                	//Pekall LK theme image
+                    //mBackground = getResources().getDrawable(R.drawable.bg_cling2);
+                    mBackground = ThemeSettings.getDrawable(mLauncher, R.drawable.bg_cling2);
+                    
                 } else if (mDrawIdentifier.equals(FOLDER_PORTRAIT) ||
                         mDrawIdentifier.equals(FOLDER_LANDSCAPE)) {
-                    mBackground = getResources().getDrawable(R.drawable.bg_cling3);
+                	
+                	//Pekall LK theme image
+                    //mBackground = getResources().getDrawable(R.drawable.bg_cling3);
+                    mBackground = ThemeSettings.getDrawable(mLauncher, R.drawable.bg_cling3);
                 } else if (mDrawIdentifier.equals(FOLDER_LARGE)) {
-                    mBackground = getResources().getDrawable(R.drawable.bg_cling4);
+                	//Pekall LK theme image
+                    //mBackground = getResources().getDrawable(R.drawable.bg_cling4);
+                	mBackground = ThemeSettings.getDrawable(mLauncher, R.drawable.bg_cling4);
                 }
             }
             if (mBackground != null) {
@@ -231,7 +248,10 @@ public class Cling extends FrameLayout {
                 mDrawIdentifier.equals(ALLAPPS_LANDSCAPE) ||
                 mDrawIdentifier.equals(ALLAPPS_LARGE)) {
                 if (mHandTouchGraphic == null) {
-                    mHandTouchGraphic = getResources().getDrawable(R.drawable.hand);
+                	
+                	//Pekall LK theme image
+                    //mHandTouchGraphic = getResources().getDrawable(R.drawable.hand);
+                    mHandTouchGraphic = ThemeSettings.getDrawable(mLauncher, R.drawable.hand);
                 }
                 int offset = mAppIconSize / 4;
                 mHandTouchGraphic.setBounds(cx + offset, cy + offset,

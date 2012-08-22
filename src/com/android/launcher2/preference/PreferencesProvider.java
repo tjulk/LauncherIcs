@@ -179,8 +179,7 @@ public final class PreferencesProvider {
         		SharedPreferences.Editor editor = sp.edit();
 
         		if (com.android.launcher2.theme.ThemeSettings.THEME_DEFAULT.equals(themePackageName)) {
-        			editor.putString("themePackageName",
-        					com.android.launcher2.theme.ThemeSettings.THEME_DEFAULT);
+        			editor.putString("themePackageName",com.android.launcher2.theme.ThemeSettings.THEME_DEFAULT);
         		} else {
         			Resources themeResources = ThemeSettings.getResources(context,
         					themePackageName);

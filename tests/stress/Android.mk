@@ -22,10 +22,10 @@ LOCAL_JAVA_LIBRARIES := android.test.runner
 
 LOCAL_SRC_FILES := $(call all-java-files-under, src)
 
-LOCAL_PACKAGE_NAME := Launcher2RotationStressTest
+LOCAL_PACKAGE_NAME := LauncherIcsRotationStressTest
 
 LOCAL_CERTIFICATE := shared
 
-LOCAL_INSTRUMENTATION_FOR := Launcher2
+LOCAL_INSTRUMENTATION_FOR := LauncherIcs
 
 include $(BUILD_PACKAGE)

@@ -48,6 +48,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LayoutAnimationController;
 
 import com.android.launcher2.FolderIcon.FolderRingAnimator;
+import com.android.launcher2.theme.ThemeSettings;
 import com.android.launcher2.R;
 
 import java.util.ArrayList;
@@ -169,11 +170,18 @@ public class CellLayout extends ViewGroup {
 
         final Resources res = getResources();
 
+        //Pekall LK theme Image
+        /**
         mNormalBackground = res.getDrawable(R.drawable.homescreen_blue_normal_holo);
         mActiveGlowBackground = res.getDrawable(R.drawable.homescreen_blue_strong_holo);
-
         mOverScrollLeft = res.getDrawable(R.drawable.overscroll_glow_left);
         mOverScrollRight = res.getDrawable(R.drawable.overscroll_glow_right);
+        */
+        mNormalBackground = ThemeSettings.getDrawable(context, R.drawable.homescreen_blue_normal_holo);
+        mActiveGlowBackground = ThemeSettings.getDrawable(context, R.drawable.homescreen_blue_strong_holo);
+        mOverScrollLeft = ThemeSettings.getDrawable(context, R.drawable.overscroll_glow_left);
+        mOverScrollRight = ThemeSettings.getDrawable(context, R.drawable.overscroll_glow_right);
+        
         mForegroundPadding =
                 res.getDimensionPixelSize(R.dimen.workspace_overscroll_drawable_padding);
 
@@ -181,8 +189,11 @@ public class CellLayout extends ViewGroup {
         mActiveGlowBackground.setFilterBitmap(true);
 
         // Initialize the data structures used for the drag visualization.
-
-        mCrosshairsDrawable = res.getDrawable(R.drawable.gardening_crosshairs);
+        //Pekall LK theme Image
+        //mCrosshairsDrawable = res.getDrawable(R.drawable.gardening_crosshairs);
+        mCrosshairsDrawable = ThemeSettings.getDrawable(context, R.drawable.gardening_crosshairs);
+        
+        
         mEaseOutInterpolator = new DecelerateInterpolator(2.5f); // Quint ease out
 
         // Set up the animation for fading the crosshairs in and out

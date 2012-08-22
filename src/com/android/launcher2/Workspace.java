@@ -72,6 +72,7 @@ import android.widget.Toast;
 import com.android.launcher2.FolderIcon.FolderRingAnimator;
 import com.android.launcher2.InstallWidgetReceiver.WidgetMimeTypeHandlerData;
 import com.android.launcher2.preference.PreferencesProvider;
+import com.android.launcher2.theme.ThemeSettings;
 import com.android.launcher2.R;
 
 import java.util.ArrayList;
@@ -475,7 +476,9 @@ public class Workspace extends PagedView
             addView(screen);        }
 
         try {
-            mBackground = res.getDrawable(R.drawable.apps_customize_bg);
+        	//Pekall LK theme iamge
+            //mBackground = res.getDrawable(R.drawable.apps_customize_bg);
+            mBackground = ThemeSettings.getDrawable(context, R.drawable.apps_customize_bg);
         } catch (Resources.NotFoundException e) {
             // In this case, we will skip drawing background protection
         }
@@ -1616,12 +1619,17 @@ public class Workspace extends PagedView
             final CellLayout rightPage = (CellLayout) getPageAt(mCurrentPage + 1);
 
             if (leftPage != null && leftPage.getIsDragOverlapping()) {
-                final Drawable d = getResources().getDrawable(R.drawable.page_hover_left_holo);
+            	//Pekall LK theme Image
+                //final Drawable d = getResources().getDrawable(R.drawable.page_hover_left_holo);
+                final Drawable d = ThemeSettings.getDrawable(mLauncher, R.drawable.page_hover_left_holo);
+                
                 d.setBounds(mScrollX, paddingTop, mScrollX + d.getIntrinsicWidth(),
                         height - paddingBottom);
                 d.draw(canvas);
             } else if (rightPage != null && rightPage.getIsDragOverlapping()) {
-                final Drawable d = getResources().getDrawable(R.drawable.page_hover_right_holo);
+            	//Pekall LK theme Image
+                //final Drawable d = getResources().getDrawable(R.drawable.page_hover_right_holo);
+                final Drawable d = ThemeSettings.getDrawable(mLauncher, R.drawable.page_hover_right_holo);
                 d.setBounds(mScrollX + width - d.getIntrinsicWidth(), paddingTop, mScrollX + width,
                         height - paddingBottom);
                 d.draw(canvas);

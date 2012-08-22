@@ -41,6 +41,7 @@ import android.widget.TextView;
 import com.android.launcher2.DropTarget.DragObject;
 import com.android.launcher2.FolderInfo.FolderListener;
 import com.android.launcher2.preference.PreferencesProvider;
+import com.android.launcher2.theme.ThemeSettings;
 import com.android.launcher2.R;
 
 import java.util.ArrayList;
@@ -162,17 +163,30 @@ public class FolderIcon extends LinearLayout implements FolderListener {
         public FolderRingAnimator(Launcher launcher, FolderIcon folderIcon) {
             mFolderIcon = folderIcon;
             Resources res = launcher.getResources();
-            mOuterRingDrawable = res.getDrawable(R.drawable.portal_ring_outer_holo);
-            mInnerRingDrawable = res.getDrawable(R.drawable.portal_ring_inner_holo);
+            
+            //Pekall LK forder icon
+            //mOuterRingDrawable = res.getDrawable(R.drawable.portal_ring_outer_holo);
+            //mInnerRingDrawable = res.getDrawable(R.drawable.portal_ring_inner_holo);
+            
+            mOuterRingDrawable = ThemeSettings.getDrawable(launcher, R.drawable.portal_ring_outer_holo);
+            mInnerRingDrawable = ThemeSettings.getDrawable(launcher, R.drawable.portal_ring_inner_holo);
 
             // We need to reload the static values when configuration changes in case they are
             // different in another configuration
             if (sStaticValuesDirty) {
                 sPreviewSize = res.getDimensionPixelSize(R.dimen.folder_preview_size);
                 sPreviewPadding = res.getDimensionPixelSize(R.dimen.folder_preview_padding);
+                
+                //Pekall LK forder icon
+                /**
                 sSharedOuterRingDrawable = res.getDrawable(R.drawable.portal_ring_outer_holo);
                 sSharedInnerRingDrawable = res.getDrawable(R.drawable.portal_ring_inner_holo);
                 sSharedFolderLeaveBehind = res.getDrawable(R.drawable.portal_ring_rest);
+                */
+                sSharedOuterRingDrawable = ThemeSettings.getDrawable(launcher, R.drawable.portal_ring_outer_holo);
+                sSharedInnerRingDrawable = ThemeSettings.getDrawable(launcher, R.drawable.portal_ring_inner_holo);
+                sSharedFolderLeaveBehind = ThemeSettings.getDrawable(launcher, R.drawable.portal_ring_rest);
+                
                 sStaticValuesDirty = false;
             }
         }

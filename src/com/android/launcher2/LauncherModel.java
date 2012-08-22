@@ -65,7 +65,7 @@ import com.android.launcher2.theme.ThemePackageManager;
  * for the Launcher.
  */
 public class LauncherModel extends BroadcastReceiver {
-    static final boolean DEBUG_LOADERS = false;
+    static final boolean DEBUG_LOADERS = true;
     static final String TAG = "Launcher.Model";
 
     private static final int ITEMS_CHUNK = 10; // batch size for the workspace icons
@@ -1712,6 +1712,7 @@ public class LauncherModel extends BroadcastReceiver {
             // the resource
             try {
                 Resources resources = packageManager.getResourcesForApplication(packageName);
+                Log.d(TAG, "package name ="+packageName);
                 if (resources != null) {
                     final int id = resources.getIdentifier(resourceName, null, null);
                     icon = Utilities.createIconBitmap(
@@ -1751,7 +1752,7 @@ public class LauncherModel extends BroadcastReceiver {
     }
 
     Bitmap getIconFromCursor(Cursor c, int iconIndex, Context context) {
-        if (false) {
+        if (true) {
             Log.d(TAG, "getIconFromCursor app="
                     + c.getString(c.getColumnIndexOrThrow(LauncherSettings.Favorites.TITLE)));
         }

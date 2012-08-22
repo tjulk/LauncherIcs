@@ -62,4 +62,9 @@
         <item>CubeOut</item>
         <item>Stack</item>
     </string-array>
+    
+    <!-- Pekall LK -->
+	<string-array name="ic_shortcut_background">
+		<item>icon_background</item>
+	</string-array> 
 </resources>

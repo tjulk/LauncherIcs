@@ -16,11 +16,12 @@
 
 package com.android.launcher2;
 
-import com.android.launcher2.R;
+import java.util.Random;
 
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.ColorMatrix;
@@ -29,17 +30,18 @@ import android.graphics.LinearGradient;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PaintFlagsDrawFilter;
-import android.graphics.PorterDuff;
+import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.graphics.TableMaskFilter;
-import android.graphics.Bitmap.Config;
-import android.graphics.PorterDuff.Mode;
 import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PaintDrawable;
 import android.util.DisplayMetrics;
+import android.util.Log;
+import android.graphics.TableMaskFilter;
+
+import com.android.launcher2.theme.ThemeSettings;
 
 /**
  * Various utilities shared amongst the Launcher's classes.
@@ -72,6 +74,8 @@ public final class Utilities {
      * to the proper size (48dp)
      */
     public static Bitmap createIconBitmap(Bitmap icon, Context context) {
+    	
+    	Log.d(TAG, "createIconBitmap bitmap");
         int textureWidth = sIconTextureWidth;
         int textureHeight = sIconTextureHeight;
         int sourceWidth = icon.getWidth();
@@ -91,6 +95,10 @@ public final class Utilities {
         }
     }
 
+    
+    //Pekall LK
+    private static Drawable[] sBackgrounds;
+    
     /**
      * Returns a bitmap suitable for the all apps view.
      */
@@ -100,6 +108,8 @@ public final class Utilities {
                 initStatics(context);
             }
 
+            Log.d(TAG, "createIconBitmap drawable");
+            
             int width = sIconWidth;
             int height = sIconHeight;
 
@@ -117,7 +127,26 @@ public final class Utilities {
             }
             int sourceWidth = icon.getIntrinsicWidth();
             int sourceHeight = icon.getIntrinsicHeight();
+            
+            Log.d(TAG, "sHasBackgraound:"+sHasBackgraound+" sBackgrounds:"+sBackgrounds+" width:"+width+" height:"+height+" sourceWidth:"+sourceWidth);
 
+            //Pekall LK
+			Drawable bg = null;
+			if (sHasBackgraound && sBackgrounds != null
+					&& sBackgrounds.length > 0) {
+	            //Pekall LK if app icon size is bigger than background , reset it
+	            if (sourceWidth>=width)
+	            	sourceWidth = (int)(width*(4f/5));
+	            if (sourceHeight>=height)
+	            	sourceHeight =(int)(height*(4f/5));	
+	            // && (width > sourceWidth || height > sourceHeight)) {
+				bg = sBackgrounds[sRandom.nextInt(sBackgrounds.length)];
+				Log.d(TAG, "icon bg is not null");
+			} else {
+				bg = null;
+				Log.d(TAG, "icon bg is null");
+			}
+            
             if (sourceWidth > 0 && sourceHeight > 0) {
                 // There are intrinsic sizes.
                 if (width < sourceWidth || height < sourceHeight) {
@@ -134,7 +163,7 @@ public final class Utilities {
                     height = sourceHeight;
                 }
             }
-
+            
             // no intrinsic size --> use default size
             int textureWidth = sIconTextureWidth;
             int textureHeight = sIconTextureHeight;
@@ -144,6 +173,14 @@ public final class Utilities {
             final Canvas canvas = sCanvas;
             canvas.setBitmap(bitmap);
 
+            
+			if (bg != null) {
+				bg.setBounds(0, 0, textureWidth, textureHeight);
+				bg.draw(canvas);
+				Log.d(TAG, "icon bg is not null ,set bg it to canvas");
+			}  
+            
+            
             final int left = (textureWidth-width) / 2;
             final int top = (textureHeight-height) / 2;
 
@@ -200,12 +237,23 @@ public final class Utilities {
         }
     }
 
+    //Pekall LK
+	private static boolean sHasBackgraound = true;
+	private static Random sRandom;
+    
     private static void initStatics(Context context) {
         final Resources resources = context.getResources();
         final DisplayMetrics metrics = resources.getDisplayMetrics();
         final float density = metrics.density;
 
-        sIconWidth = sIconHeight = (int) resources.getDimension(R.dimen.app_icon_size);
+        //Pekall LK
+		sHasBackgraound = ThemeSettings.getBoolean(context,
+				R.bool.config_icon_has_background);
+		sBackgrounds = loadIconBackground(context);
+		sRandom = new Random();
+		
+        sIconWidth = sIconHeight = (int) (resources.getDimension(R.dimen.app_icon_size)*(sHasBackgraound?(5f / 4):1));
+        
         sIconTextureWidth = sIconTextureHeight = sIconWidth;
 
         sBlurPaint.setMaskFilter(new BlurMaskFilter(5 * density, BlurMaskFilter.Blur.NORMAL));
@@ -292,4 +340,49 @@ public final class Utilities {
 
 		return new BitmapDrawable(context.getResources(), bitmapWithReflection);
 	}
+	
+	//Pekall LK
+	private static Drawable[] loadIconBackground(Context context) {
+		String[] names = ThemeSettings.getStringArray(context,
+				R.array.ic_shortcut_background, null);
+
+		if (names == null
+				|| ThemeSettings.THEME_DEFAULT.equals(ThemeSettings
+						.getCurrentThemePackage())) {
+			Resources res = context.getResources();
+			names = res.getStringArray(R.array.ic_shortcut_background);
+			Drawable[] ds = new Drawable[names.length];
+			for (int i = 0; i < names.length; i++) {
+				int id = res.getIdentifier(names[i], "drawable", context
+						.getPackageName());
+				if (id != 0) {
+					ds[i] = res.getDrawable(id);
+				}
+			}
+			return ds;
+		} else {
+
+			Drawable[] ds = new Drawable[names.length];
+
+			int count = 0;
+			for (int i = 0; i < names.length; i++) {
+				ds[i] = ThemeSettings.getDrawable(context, names[i], null);
+				if (ds[i] != null)
+					count++;
+			}
+			// remove null items
+			if (count != names.length && count > 0) {
+				Drawable[] drawables = new Drawable[count];
+				int j = 0;
+				for (int i = 0; i < ds.length; i++) {
+					if (ds[i] != null && j < count) {
+						drawables[j++] = ds[i];
+					}
+				}
+				ds = drawables;
+			}
+			return ds;
+		}
+	}
+	
 }

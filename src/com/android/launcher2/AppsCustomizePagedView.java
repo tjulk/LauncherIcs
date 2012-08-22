@@ -63,6 +63,7 @@ import android.widget.Toast;
 
 import com.android.launcher2.DropTarget.DragObject;
 import com.android.launcher2.preference.PreferencesProvider;
+import com.android.launcher2.theme.ThemeSettings;
 import com.android.launcher2.R;
 
 import static com.android.launcher2.AppsCustomizeView.ContentType;
@@ -270,7 +271,12 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
 
         // Save the default widget preview background
         Resources resources = context.getResources();
-        mDefaultWidgetBackground = resources.getDrawable(R.drawable.default_widget_preview_holo);
+        
+        //Pekall LK
+        //mDefaultWidgetBackground = resources.getDrawable(R.drawable.default_widget_preview_holo);
+        mDefaultWidgetBackground = ThemeSettings.getDrawable(context, R.drawable.default_widget_preview_holo);
+        
+        
         mAppIconSize = resources.getDimensionPixelSize(R.dimen.app_icon_size);
         mDragViewMultiplyColor = resources.getColor(R.color.drag_view_multiply_color);
 
@@ -1239,6 +1245,8 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
         return preview;
     }
 
+    
+    //TODO Pekall LK SimWidget drawable
     private Bitmap getWidgetPreview(ComponentName provider, int previewImage, int iconId,
             int cellHSpan, int cellVSpan, int maxWidth, int maxHeight) {
         // Load the preview image if possible
@@ -1249,6 +1257,12 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
         Drawable drawable = null;
         if (previewImage != 0) {
             drawable = mPackageManager.getDrawable(packageName, previewImage, null);
+            //TODO
+            
+            
+            
+            
+            //TODO
             if (drawable == null) {
                 Log.w(LOG_TAG, "Can't load widget preview drawable 0x" +
                         Integer.toHexString(previewImage) + " for provider: " + provider);
@@ -1315,8 +1329,11 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
                 int yoffset = (int) (bitmapHeight / 2 - mAppIconSize * iconScale / 2);
                 if (iconId > 0) icon = mIconCache.getFullResIcon(packageName, iconId);
                 Resources resources = mLauncher.getResources();
-                if (icon == null) icon = resources.getDrawable(R.drawable.ic_launcher_application);
-
+                if (icon == null)
+                //Pekall LK
+                //icon = resources.getDrawable(R.drawable.ic_launcher_application);
+                icon = ThemeSettings.getDrawable(mLauncher, R.drawable.ic_launcher_application);
+                
                 renderDrawableToBitmap(icon, preview, hoffset, yoffset,
                         (int) (mAppIconSize * iconScale),
                         (int) (mAppIconSize * iconScale));

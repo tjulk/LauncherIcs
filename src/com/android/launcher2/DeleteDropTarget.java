@@ -17,6 +17,7 @@
 package com.android.launcher2;
 
 import com.android.launcher2.R;
+import com.android.launcher2.theme.ThemeSettings;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -51,13 +52,18 @@ public class DeleteDropTarget extends ButtonDropTarget {
     private boolean mUninstall;
 
     private final Handler mHandler = new Handler();
+    
+    //Pekall LK 
+    private Context mContext;
 
     public DeleteDropTarget(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
+        mContext = context;
     }
 
     public DeleteDropTarget(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        mContext = context;
     }
 
     private final Runnable mShowUninstaller = new Runnable() {
@@ -79,9 +85,16 @@ public class DeleteDropTarget extends ButtonDropTarget {
         mHoverColor = r.getColor(R.color.delete_target_hover_tint);
         mHoverPaint.setColorFilter(new PorterDuffColorFilter(
                 mHoverColor, PorterDuff.Mode.SRC_ATOP));
+        
+        //Pekall LK theme image 
+        /**
         mUninstallActiveDrawable = r.getDrawable(R.drawable.ic_launcher_trashcan_active_holo);
         mRemoveActiveDrawable = r.getDrawable(R.drawable.ic_launcher_clear_active_holo);
         mRemoveNormalDrawable = r.getDrawable(R.drawable.ic_launcher_clear_normal_holo);
+        */
+        mUninstallActiveDrawable = ThemeSettings.getDrawable(mContext, R.drawable.ic_launcher_trashcan_active_holo);
+        mRemoveActiveDrawable = ThemeSettings.getDrawable(mContext, R.drawable.ic_launcher_clear_active_holo);
+        mRemoveNormalDrawable = ThemeSettings.getDrawable(mContext, R.drawable.ic_launcher_clear_normal_holo);
 
         // Remove the text in the Phone UI in landscape
         int orientation = getResources().getConfiguration().orientation;

@@ -17,6 +17,7 @@
 package com.android.launcher2;
 
 import com.android.launcher2.R;
+import com.android.launcher2.theme.ThemeSettings;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -102,8 +103,11 @@ public class Hotseat extends FrameLayout {
         LayoutInflater inflater = LayoutInflater.from(context);
         BubbleTextView allAppsButton = (BubbleTextView)
                 inflater.inflate(R.layout.application, mContent, false);
-        allAppsButton.setCompoundDrawablesWithIntrinsicBounds(null,
-                context.getResources().getDrawable(R.drawable.all_apps_button_icon), null, null);
+        
+        //Pekall LK 
+        //allAppsButton.setCompoundDrawablesWithIntrinsicBounds(null,context.getResources().getDrawable(R.drawable.all_apps_button_icon), null, null);
+        allAppsButton.setCompoundDrawablesWithIntrinsicBounds(null,ThemeSettings.getDrawable(context, R.drawable.all_apps_button_icon), null, null);
+        
         allAppsButton.setContentDescription(context.getString(R.string.all_apps_button_label));
         allAppsButton.setOnTouchListener(new View.OnTouchListener() {
             @Override

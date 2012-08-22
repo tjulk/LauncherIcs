@@ -1424,7 +1424,7 @@ public final class Launcher extends Activity
                         return true;
                     }
             });
-        if (!getResources().getBoolean(R.bool.config_cyanogenmod)) {
+        if (!getResources().getBoolean(R.bool.config_pekall)) {
             menu.add(0, MENU_PREFERENCES, 0, R.string.menu_preferences)
                 .setIcon(android.R.drawable.ic_menu_preferences)
                 .setIntent(preferences)
@@ -2924,7 +2924,7 @@ public final class Launcher extends Activity
         }
 
         if (activityName != null && (ViewConfiguration.get(this).hasPermanentMenuKey() ||
-                getResources().getBoolean(R.bool.config_cyanogenmod))) {
+                getResources().getBoolean(R.bool.config_pekall))) {
             int coi = getCurrentOrientationIndexForGlobalIcons();
             sAppMarketIcon[coi] = updateTextButtonWithIconFromExternalActivity(
                     R.id.market_button, activityName, R.drawable.ic_launcher_market_holo);
@@ -2944,7 +2944,7 @@ public final class Launcher extends Activity
     private void updateOverflowMenuButton() {
         View overflowMenuButton = findViewById(R.id.overflow_menu_button);
         if (ViewConfiguration.get(this).hasPermanentMenuKey() ||
-                getResources().getBoolean(R.bool.config_cyanogenmod)) {
+                getResources().getBoolean(R.bool.config_pekall)) {
             overflowMenuButton.setVisibility(View.GONE);
             overflowMenuButton.setEnabled(false);
         } else {

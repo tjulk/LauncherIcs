@@ -14,7 +14,10 @@ public final class R {
         public static final int paged_view_click_feedback=0x7f040002;
     }
     public static final class array {
-        public static final int extra_wallpapers=0x7f060004;
+        public static final int extra_wallpapers=0x7f060005;
+        /**  Pekall LK 
+         */
+        public static final int ic_shortcut_background=0x7f060004;
         public static final int preferences_interface_drawer_scrolling_transition_effect_entries=0x7f060002;
         public static final int preferences_interface_drawer_scrolling_transition_effect_values=0x7f060003;
         public static final int preferences_interface_homescreen_scrolling_transition_effect_entries=0x7f060000;
@@ -28,7 +31,7 @@ public final class R {
         <item>wallpaper10</item>
         
          */
-        public static final int wallpapers=0x7f060005;
+        public static final int wallpapers=0x7f060006;
     }
     public static final class attr {
         /**  The blur color of the holographic outline 
@@ -523,10 +526,13 @@ containing a value of this type.
         public static final int y=0x7f010021;
     }
     public static final class bool {
-        public static final int config_cyanogenmod=0x7f080003;
         public static final int config_defaultAutoRotate=0x7f080002;
         public static final int config_hardwareAccelerated=0x7f080000;
+        /**  Pekall LK 
+         */
+        public static final int config_icon_has_background=0x7f080006;
         public static final int config_largeHeap=0x7f080001;
+        public static final int config_pekall=0x7f080003;
         /**  Workspace 
  Whether or not the drop targets drop down as opposed to fade in 
  Workspace 
@@ -832,71 +838,72 @@ containing a value of this type.
         public static final int ic_menu_overflow=0x7f020031;
         public static final int ic_menu_refresh=0x7f020032;
         public static final int ic_no_applications=0x7f020033;
-        public static final int info_target_selector=0x7f020034;
-        public static final int overscroll_glow_left=0x7f020035;
-        public static final int overscroll_glow_right=0x7f020036;
-        public static final int page_hover_left_holo=0x7f020037;
-        public static final int page_hover_right_holo=0x7f020038;
-        public static final int paged_view_indicator=0x7f020039;
-        public static final int portal_container_holo=0x7f02003a;
-        public static final int portal_ring_inner_holo=0x7f02003b;
-        public static final int portal_ring_inner_nolip_holo=0x7f02003c;
-        public static final int portal_ring_outer_holo=0x7f02003d;
-        public static final int portal_ring_rest=0x7f02003e;
-        public static final int pressed_application_background=0x7f02003f;
-        public static final int remove_target_selector=0x7f020040;
-        public static final int search_bg_panel=0x7f020041;
-        public static final int search_frame=0x7f020042;
-        public static final int shortcut_selector=0x7f020043;
-        public static final int tab_selected_focused_holo=0x7f020044;
-        public static final int tab_selected_holo=0x7f020045;
-        public static final int tab_selected_pressed_focused_holo=0x7f020046;
-        public static final int tab_selected_pressed_holo=0x7f020047;
-        public static final int tab_unselected_focused_holo=0x7f020048;
-        public static final int tab_unselected_holo=0x7f020049;
-        public static final int tab_unselected_pressed_focused_holo=0x7f02004a;
-        public static final int tab_unselected_pressed_holo=0x7f02004b;
-        public static final int tab_widget_indicator_selector=0x7f02004c;
-        public static final int theme_preview=0x7f02004d;
-        public static final int uninstall_target_selector=0x7f02004e;
-        public static final int wallpaper1=0x7f02004f;
-        public static final int wallpaper1_small=0x7f020050;
-        public static final int wallpaper2=0x7f020051;
-        public static final int wallpaper2_small=0x7f020052;
-        public static final int wallpaper3=0x7f020053;
-        public static final int wallpaper3_small=0x7f020054;
-        public static final int wallpaper4=0x7f020055;
-        public static final int wallpaper4_small=0x7f020056;
-        public static final int wallpaper_architecture=0x7f020057;
-        public static final int wallpaper_architecture_small=0x7f020058;
-        public static final int wallpaper_bubblegum=0x7f020059;
-        public static final int wallpaper_bubblegum_small=0x7f02005a;
-        public static final int wallpaper_canyon=0x7f02005b;
-        public static final int wallpaper_canyon_small=0x7f02005c;
-        public static final int wallpaper_chroma=0x7f02005d;
-        public static final int wallpaper_chroma_small=0x7f02005e;
-        public static final int wallpaper_escape=0x7f02005f;
-        public static final int wallpaper_escape_small=0x7f020060;
-        public static final int wallpaper_fidelity=0x7f020061;
-        public static final int wallpaper_fidelity_small=0x7f020062;
-        public static final int wallpaper_flora=0x7f020063;
-        public static final int wallpaper_flora_small=0x7f020064;
-        public static final int wallpaper_gallery_background=0x7f020065;
-        public static final int wallpaper_gallery_item=0x7f020066;
-        public static final int wallpaper_kepler=0x7f020067;
-        public static final int wallpaper_kepler_small=0x7f020068;
-        public static final int wallpaper_leaf=0x7f020069;
-        public static final int wallpaper_leaf_small=0x7f02006a;
-        public static final int wallpaper_noir=0x7f02006b;
-        public static final int wallpaper_noir_small=0x7f02006c;
-        public static final int wallpaper_outofthebox=0x7f02006d;
-        public static final int wallpaper_outofthebox_small=0x7f02006e;
-        public static final int wallpaper_picker_preview=0x7f02006f;
-        public static final int widget_resize_frame_holo=0x7f020070;
-        public static final int widget_resize_handle_bottom=0x7f020071;
-        public static final int widget_resize_handle_left=0x7f020072;
-        public static final int widget_resize_handle_right=0x7f020073;
-        public static final int widget_resize_handle_top=0x7f020074;
+        public static final int icon_background=0x7f020034;
+        public static final int info_target_selector=0x7f020035;
+        public static final int overscroll_glow_left=0x7f020036;
+        public static final int overscroll_glow_right=0x7f020037;
+        public static final int page_hover_left_holo=0x7f020038;
+        public static final int page_hover_right_holo=0x7f020039;
+        public static final int paged_view_indicator=0x7f02003a;
+        public static final int portal_container_holo=0x7f02003b;
+        public static final int portal_ring_inner_holo=0x7f02003c;
+        public static final int portal_ring_inner_nolip_holo=0x7f02003d;
+        public static final int portal_ring_outer_holo=0x7f02003e;
+        public static final int portal_ring_rest=0x7f02003f;
+        public static final int pressed_application_background=0x7f020040;
+        public static final int remove_target_selector=0x7f020041;
+        public static final int search_bg_panel=0x7f020042;
+        public static final int search_frame=0x7f020043;
+        public static final int shortcut_selector=0x7f020044;
+        public static final int tab_selected_focused_holo=0x7f020045;
+        public static final int tab_selected_holo=0x7f020046;
+        public static final int tab_selected_pressed_focused_holo=0x7f020047;
+        public static final int tab_selected_pressed_holo=0x7f020048;
+        public static final int tab_unselected_focused_holo=0x7f020049;
+        public static final int tab_unselected_holo=0x7f02004a;
+        public static final int tab_unselected_pressed_focused_holo=0x7f02004b;
+        public static final int tab_unselected_pressed_holo=0x7f02004c;
+        public static final int tab_widget_indicator_selector=0x7f02004d;
+        public static final int theme_preview=0x7f02004e;
+        public static final int uninstall_target_selector=0x7f02004f;
+        public static final int wallpaper1=0x7f020050;
+        public static final int wallpaper1_small=0x7f020051;
+        public static final int wallpaper2=0x7f020052;
+        public static final int wallpaper2_small=0x7f020053;
+        public static final int wallpaper3=0x7f020054;
+        public static final int wallpaper3_small=0x7f020055;
+        public static final int wallpaper4=0x7f020056;
+        public static final int wallpaper4_small=0x7f020057;
+        public static final int wallpaper_architecture=0x7f020058;
+        public static final int wallpaper_architecture_small=0x7f020059;
+        public static final int wallpaper_bubblegum=0x7f02005a;
+        public static final int wallpaper_bubblegum_small=0x7f02005b;
+        public static final int wallpaper_canyon=0x7f02005c;
+        public static final int wallpaper_canyon_small=0x7f02005d;
+        public static final int wallpaper_chroma=0x7f02005e;
+        public static final int wallpaper_chroma_small=0x7f02005f;
+        public static final int wallpaper_escape=0x7f020060;
+        public static final int wallpaper_escape_small=0x7f020061;
+        public static final int wallpaper_fidelity=0x7f020062;
+        public static final int wallpaper_fidelity_small=0x7f020063;
+        public static final int wallpaper_flora=0x7f020064;
+        public static final int wallpaper_flora_small=0x7f020065;
+        public static final int wallpaper_gallery_background=0x7f020066;
+        public static final int wallpaper_gallery_item=0x7f020067;
+        public static final int wallpaper_kepler=0x7f020068;
+        public static final int wallpaper_kepler_small=0x7f020069;
+        public static final int wallpaper_leaf=0x7f02006a;
+        public static final int wallpaper_leaf_small=0x7f02006b;
+        public static final int wallpaper_noir=0x7f02006c;
+        public static final int wallpaper_noir_small=0x7f02006d;
+        public static final int wallpaper_outofthebox=0x7f02006e;
+        public static final int wallpaper_outofthebox_small=0x7f02006f;
+        public static final int wallpaper_picker_preview=0x7f020070;
+        public static final int widget_resize_frame_holo=0x7f020071;
+        public static final int widget_resize_handle_bottom=0x7f020072;
+        public static final int widget_resize_handle_left=0x7f020073;
+        public static final int widget_resize_handle_right=0x7f020074;
+        public static final int widget_resize_handle_top=0x7f020075;
     }
     public static final class id {
         public static final int all_apps_button=0x7f0e002e;
