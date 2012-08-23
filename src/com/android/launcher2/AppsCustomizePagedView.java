@@ -318,9 +318,6 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
         //Pekall LK  set app list background as wallpaper
         setBackgroundResource(android.R.color.transparent);
     }
-    
-
-    
 
     @Override
     protected void init() {
@@ -1465,7 +1462,6 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
                 // priority
                 task.syncThreadPriority();
             }
-
             if (item instanceof AppWidgetProviderInfo) {
                 AppWidgetProviderInfo info = (AppWidgetProviderInfo) item;
                 int[] cellSpans = mLauncher.getSpanForWidget(info, null);

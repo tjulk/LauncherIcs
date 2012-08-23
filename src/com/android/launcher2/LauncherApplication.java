@@ -44,7 +44,7 @@ public class LauncherApplication extends Application {
     public void onCreate() {
         super.onCreate();
         
-        //Pekall LK
+        //Pekall LK as the app is first launch, set the default wallpaper
 		if (PreferencesProvider.Interface.General.isFistLauncherFlag(this)) {
 			PreferencesProvider.Interface.General.clearFirstLaunchFlag(this);
 			try {
@@ -54,7 +54,6 @@ public class LauncherApplication extends Application {
 				Log.e("LauncherApplication", "Failed to set wallpaper: " + e);
 			}
 		}
-        
         
         // set sIsScreenXLarge and sScreenDensity *before* creating icon cache
         sIsScreenLarge = getResources().getConfiguration().smallestScreenWidthDp >= 600;

@@ -274,6 +274,10 @@ s -->
     <string name="folder_name_format">Folder: %1$s</string>
 
     <skip />
+    
+        
+    
+    <!-- Pekall LK   -->
     <!--             -->
     <!-- Preferences -->
     <!--             -->
@@ -320,7 +324,6 @@ s -->
     <string name="preferences_interface_homescreen_indicator_background_title">Show dock divider</string>
     <string name="preferences_interface_homescreen_indicator_background_summary">Show the background behind the indicator</string>
 
-    <!-- Drawer -->
     <string name="preferences_interface_drawer_title">Drawer</string>
     <string name="preferences_interface_drawer_widgets_category">Widgets</string>
     <string name="preferences_interface_drawer_widgets_join_apps_title">Join with apps</string>
@@ -336,18 +339,13 @@ s -->
     <string name="preferences_interface_drawer_indicator_fade_title">Fade indicator</string>
     <string name="preferences_interface_drawer_indicator_fade_summary">Fade the indicator after the page has changed</string>
 
-    <!-- Dock -->
     <string name="preferences_interface_dock_title">Dock</string>
 
-    <!-- Icons -->
     <string name="preferences_interface_icons_title">Icons</string>
 
-    <!-- General -->
     <string name="preferences_interface_general_title">General</string>
     <string name="preferences_interface_general_orientation_title">Auto-rotate screen</string>
-    
-    
-    <!-- Pekall LK -->
+
     <string name="default_theme">Default Style</string>
 	<string name="msg_no_theme_file">No theme file found.\nThe theme files need to be put in the folder \"/sdcard/launchertheme\".</string>
 	<string name="refresh">Refresh</string>
@@ -357,4 +355,5 @@ s -->
     <string name="pref_title_theme_settings">Themes</string>
 	<string name="permlab_theme">Launcher Theme</string>
     <string name="permdesc_theme">Allow launcher to set as current theme</string>	
+    <!-- Pekall LK   -->
 </resources>

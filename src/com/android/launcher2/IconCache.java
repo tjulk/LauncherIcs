@@ -16,6 +16,8 @@
 
 package com.android.launcher2;
 
+import java.util.HashMap;
+
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -23,12 +25,11 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
 
-import java.util.HashMap;
-
-import com.android.launcher2.R;
+import com.android.launcher2.theme.ThemeSettings;
 
 /**
  * Cache of application icons.  Icons can be made from any thread.
@@ -217,8 +218,13 @@ public class IconCache {
                 entry.title = info.activityInfo.name;
             }
 
-            entry.icon = Utilities.createIconBitmap(
-                    getFullResIcon(info), mContext);
+            //Pekall LK Theme icon set
+            Drawable d = info.activityInfo.loadIcon(mPackageManager);
+			Drawable d1 = ThemeSettings.getDrawable(mContext, componentName
+					.getClassName(), d);
+            
+            //entry.icon = Utilities.createIconBitmap(getFullResIcon(info), mContext);
+			entry.icon = Utilities.createIconBitmap(d1, mContext);
         }
         return entry;
     }
@@ -233,4 +239,5 @@ public class IconCache {
             return set;
         }
     }
+    
 }

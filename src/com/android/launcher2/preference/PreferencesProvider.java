@@ -162,7 +162,6 @@ public final class PreferencesProvider {
                 return preferences.getBoolean("ui_general_orientation", def);
             }
             
-            //Pekall LK  
             public static boolean isFistLauncherFlag(Context context) {
                 final SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, 0);
                 return preferences.getBoolean("is_first_launcher", true);

@@ -29,11 +29,6 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import com.android.launcher2.R;
 
-/*
- * @author Danesh
- * @author nebkat
- */
-
 public class DoubleNumberPickerPreference extends DialogPreference {
     private int mMin1, mMax1, mDefault1;
     private int mMin2, mMax2, mDefault2;

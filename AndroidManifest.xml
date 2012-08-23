@@ -142,10 +142,12 @@
             </intent-filter>
         </receiver>
 
-        <!-- The settings provider contains Home's data, like the workspace favorites -->
+        <!-- The settings provider contains Home's data, like the workspace favorites
+         Pekall LK reset authorities name avoid the same provider
+         -->
         <provider
             android:name=".LauncherProvider"
-            android:authorities="com.android.launcher2.settings"
+            android:authorities="com.pekall.launcher2.settings"
             android:writePermission="com.android.launcher.permission.WRITE_SETTINGS"
             android:readPermission="com.android.launcher.permission.READ_SETTINGS" />
 

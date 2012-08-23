@@ -66,7 +66,8 @@ public class LauncherProvider extends ContentProvider {
 
     private static final int DATABASE_VERSION = 9;
 
-    static final String AUTHORITY = "com.android.launcher2.settings";
+    //Pekall LK reset AUTHORITY to avoid the same provider
+    static final String AUTHORITY = "com.pekall.launcher2.settings";
 
     static final String TABLE_FAVORITES = "favorites";
     static final String PARAMETER_NOTIFY = "notify";

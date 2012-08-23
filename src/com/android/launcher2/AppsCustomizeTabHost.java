@@ -77,7 +77,7 @@ public class AppsCustomizeTabHost extends TabHost implements LauncherTransitiona
         // Preferences
         mFadeScrollingIndicator = PreferencesProvider.Interface.Drawer.Indicator.getFadeScrollingIndicator(context);
         
-        //Pekall LK  set app list background alpha
+        //Pekall LK  set app list background ,now we get the wallpaper to set it , TODO config.
         setBackgroundAsWallPaper(context);
     }
     

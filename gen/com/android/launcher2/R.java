@@ -15,11 +15,11 @@ public final class R {
     }
     public static final class array {
         public static final int extra_wallpapers=0x7f060005;
-        /**  Pekall LK 
-         */
         public static final int ic_shortcut_background=0x7f060004;
         public static final int preferences_interface_drawer_scrolling_transition_effect_entries=0x7f060002;
         public static final int preferences_interface_drawer_scrolling_transition_effect_values=0x7f060003;
+        /**  Pekall LK 
+         */
         public static final int preferences_interface_homescreen_scrolling_transition_effect_entries=0x7f060000;
         public static final int preferences_interface_homescreen_scrolling_transition_effect_values=0x7f060001;
         /** 
@@ -528,8 +528,6 @@ containing a value of this type.
     public static final class bool {
         public static final int config_defaultAutoRotate=0x7f080002;
         public static final int config_hardwareAccelerated=0x7f080000;
-        /**  Pekall LK 
-         */
         public static final int config_icon_has_background=0x7f080006;
         public static final int config_largeHeap=0x7f080001;
         public static final int config_pekall=0x7f080003;
@@ -1225,8 +1223,6 @@ containing a value of this type.
         /**  The format string for default page scroll text [CHAR_LIMIT=none] 
          */
         public static final int default_scroll_format=0x7f09004e;
-        /**  Pekall LK 
-         */
         public static final int default_theme=0x7f09009a;
         /**  Label for delete drop target. [CHAR_LIMIT=30] 
  Label for drop target 
@@ -1451,7 +1447,6 @@ s
  Dock 
  Dock 
  Dock 
- Dock 
          */
         public static final int preferences_interface_dock_title=0x7f090096;
         public static final int preferences_interface_drawer_indicator_category=0x7f090091;
@@ -1474,7 +1469,6 @@ s
  Drawer 
  Drawer 
  Drawer 
- Drawer 
          */
         public static final int preferences_interface_drawer_title=0x7f090088;
         public static final int preferences_interface_drawer_widgets_category=0x7f090089;
@@ -1482,7 +1476,6 @@ s
         public static final int preferences_interface_drawer_widgets_join_apps_title=0x7f09008a;
         public static final int preferences_interface_general_orientation_title=0x7f090099;
         /**  General 
- General 
  General 
  General 
  General 
@@ -1559,7 +1552,6 @@ s
  Icons 
  Icons 
  Icons 
- Icons 
          */
         public static final int preferences_interface_icons_title=0x7f090097;
         /**  UI 
@@ -1573,7 +1565,8 @@ s
  UI 
          */
         public static final int preferences_interface_title=0x7f090064;
-        /**              
+        /**  Pekall LK   
+             
  Preferences 
              
              

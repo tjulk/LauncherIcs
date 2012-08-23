@@ -5,7 +5,7 @@
 
     <bool name="config_pekall">false</bool>
 
-<!-- AllApps/Customize/AppsCustomize -->
+	<!-- AllApps/Customize/AppsCustomize -->
     <!-- Which default transition effect to use on the AppsCustomize -->
     <string name="config_drawerDefaultTransitionEffect">Stack</string>
     <!-- The alpha of the AppsCustomize bg in spring loaded mode -->
@@ -98,6 +98,5 @@
     <integer name="config_workspaceRows">4</integer>
     <integer name="config_workspaceColumns">4</integer>
     
-    <!-- Pekall LK -->
     <bool name="config_icon_has_background">true</bool>
 </resources>

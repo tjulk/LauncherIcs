@@ -18,6 +18,7 @@
 -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+	<!-- Pekall LK -->    
     <string-array name="preferences_interface_homescreen_scrolling_transition_effect_entries">
         <item>Standard</item>
         <item>Tablet</item>
@@ -63,8 +64,8 @@
         <item>Stack</item>
     </string-array>
     
-    <!-- Pekall LK -->
 	<string-array name="ic_shortcut_background">
 		<item>icon_background</item>
 	</string-array> 
+	<!-- Pekall LK -->
 </resources>

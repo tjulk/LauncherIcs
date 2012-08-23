@@ -71,15 +71,11 @@ public class Preferences extends PreferenceActivity implements ThemeManagerCallb
         Preference version = findPreference("application_version");
         version.setTitle(getString(R.string.application_name));
         
-        //Pekall LK
+        //Pekall LK init.
         initThemePreference();
     }
     
-    
-    
-    
-    
-    //Pekall LK
+    //Pekall LK add static variable for theme
 	private static final int DIALOG_WAITING = 1;
 	private static final int MSG_APPLY_THEME = 0;
 	private static final int MSG_SHOW_WAIT_DIALOG = MSG_APPLY_THEME + 1;
@@ -94,7 +90,6 @@ public class Preferences extends PreferenceActivity implements ThemeManagerCallb
 				dismissDialog(DIALOG_WAITING);
 				break;
 			case MSG_SHOW_WAIT_DIALOG:
-				
 				Log.d(TAG, "show dialog ====");
 				showDialog(DIALOG_WAITING);
 				mHandler.sendMessageDelayed(mHandler
