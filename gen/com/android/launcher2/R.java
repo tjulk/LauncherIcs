@@ -543,6 +543,10 @@ containing a value of this type.
  Whether to fade the adjacent screens when scrolling 
          */
         public static final int config_workspaceDefualtFadeInAdjacentScreens=0x7f080005;
+        /**  Workspace 
+ Whether or not to fade the side pages 
+         */
+        public static final int config_workspaceFadeAdjacentScreens=0x7f080007;
     }
     public static final class color {
         public static final int appwidget_error_color=0x7f070004;
