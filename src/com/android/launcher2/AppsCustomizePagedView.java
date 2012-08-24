@@ -196,6 +196,11 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
     private ContentType mContentType;
     private SortMode mSortMode = SortMode.Title;
     private ArrayList<ApplicationInfo> mApps;
+    
+    //Pekall LK the the download apps form mApps
+    private ArrayList<ApplicationInfo> mDownloadApps;
+    
+    
     private ArrayList<Object> mWidgets;
 
     // Cling
@@ -221,6 +226,8 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
     private PagedViewCellLayout mWidgetSpacingLayout;
     private int mNumAppsPages = 0;
     private int mNumWidgetPages = 0;
+    //Pekall LK downloadAppsPage
+    private int mNumDownloadAppsPages = 0;
 
     // Relating to the scroll and overscroll effects
     Workspace.ZInterpolator mZInterpolator = new Workspace.ZInterpolator(0.5f);
@@ -263,6 +270,9 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
         mPackageManager = context.getPackageManager();
         mContentType = ContentType.Apps;
         mApps = new ArrayList<ApplicationInfo>();
+        //Pekall LK
+        mDownloadApps = new ArrayList<ApplicationInfo>();
+        
         mWidgets = new ArrayList<Object>();
         mIconCache = ((LauncherApplication) context.getApplicationContext()).getIconCache();
         mHolographicOutlineHelper = new HolographicOutlineHelper();
@@ -352,14 +362,22 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
                     if (childCount > 0) {
                         i = (currentPage * numItemsPerPage) + (childCount / 2);
                     }
-                } else {
+                } 
+                //Pekall LK 
+                else if (currentPage > mNumAppsPages && currentPage<mNumDownloadAppsPages) {
+                	//TODO
+                	
+                	
+                	
+                	//TODO
+                }
+                else {
                     int numApps = mApps.size();
                     PagedViewGridLayout layout = (PagedViewGridLayout) getPageAt(currentPage);
                     int numItemsPerPage = mWidgetCountX * mWidgetCountY;
                     int childCount = layout.getChildCount();
                     if (childCount > 0) {
-                        i = numApps +
-                            ((currentPage - mNumAppsPages) * numItemsPerPage) + (childCount / 2);
+                        i = numApps + ((currentPage - mNumAppsPages) * numItemsPerPage) + (childCount / 2);
                     }
                 }
             } else {
@@ -380,7 +398,16 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
                     if (childCount > 0) {
                         i = (currentPage * numItemsPerPage) + (childCount / 2);
                     }}
-                    break;
+                	break;
+                //Pekall LK DownLoad apps
+                case DownLoad: {
+                	//TODO
+                	
+                	
+                	
+                	//TODO
+                	break;
+                	}
                 }
             }
         }
@@ -404,13 +431,24 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
             if (index < mApps.size()) {
                 int numItemsPerPage = mCellCountX * mCellCountY;
                 return (index / numItemsPerPage);
-            } else {
+            } 
+            //Pekall LK
+            else if (index > mApps.size() && index < (mDownloadApps.size() + mApps.size())) {
+                int numItemsPerPage = mCellCountX * mCellCountY;
+                return (index / numItemsPerPage);
+            }
+            else {
                 int numItemsPerPage = mWidgetCountX * mWidgetCountY;
                 return mNumAppsPages + ((index - mApps.size()) / numItemsPerPage);
             }
         } else {
             switch (mContentType) {
             case Apps: {
+                int numItemsPerPage = mCellCountX * mCellCountY;
+                return (index / numItemsPerPage);
+            }
+            //Pekall LK
+            case DownLoad: {
                 int numItemsPerPage = mCellCountX * mCellCountY;
                 return (index / numItemsPerPage);
             }
@@ -447,6 +485,8 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
             mNumWidgetPages = (int) Math.ceil(mWidgets.size() /
                     (float) (mWidgetCountX * mWidgetCountY));
             mNumAppsPages = (int) Math.ceil((float) mApps.size() / (mCellCountX * mCellCountY));
+            //Pekall LK
+            mNumDownloadAppsPages = (int) Math.ceil((float) mDownloadApps.size() / (mCellCountX * mCellCountY));
         }
     }
 
@@ -1031,7 +1071,9 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
         int minPageDiff = Integer.MAX_VALUE;
         while (iter.hasNext()) {
             AppsCustomizeAsyncTask task = iter.next();
-            minPageDiff = Math.abs(task.page + mNumAppsPages - toPage);
+            //Pekall LK add mNumDownloadAppsPages
+            //minPageDiff = Math.abs(task.page + mNumAppsPages - toPage);
+            minPageDiff = Math.abs(task.page + mNumAppsPages +mNumDownloadAppsPages - toPage);
         }
 
         int rawPageDiff = Math.abs(page - toPage);
@@ -1477,8 +1519,9 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
     }
     private void onSyncWidgetPageItems(AsyncTaskPageData data) {
         int page = data.page;
-        PagedViewGridLayout layout = (PagedViewGridLayout) getPageAt(page + mNumAppsPages);
-
+        //Pekall LK add download apps pages
+        //PagedViewGridLayout layout = (PagedViewGridLayout) getPageAt(page + mNumAppsPages);
+        PagedViewGridLayout layout = (PagedViewGridLayout) getPageAt(page + mNumAppsPages + mNumDownloadAppsPages);
         ArrayList<Object> items = data.items;
         int count = items.size();
         for (int i = 0; i < count; ++i) {
@@ -1985,6 +2028,8 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
     public void dumpState() {
         // TODO: Dump information related to current list of Applications, Widgets, etc.
         ApplicationInfo.dumpApplicationInfoList(LOG_TAG, "mApps", mApps);
+        //Pekalll LK
+        ApplicationInfo.dumpApplicationInfoList(LOG_TAG, "mDownloadApps", mDownloadApps);
         dumpAppWidgetProviderInfoList(LOG_TAG, "mWidgets", mWidgets);
     }
 
@@ -2047,7 +2092,14 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
             if (page < mNumAppsPages) {
                 stringId = R.string.apps_customize_apps_scroll_format;
                 count = mNumAppsPages;
-            } else {
+            } 
+            //Pekall LK 
+            else if (page > mNumAppsPages && page < (mNumAppsPages + mNumDownloadAppsPages)) {
+                stringId = R.string.apps_customize_download_scroll_format;
+                count = mNumDownloadAppsPages;
+            }
+            
+            else {
                 page -= mNumAppsPages;
                 stringId = R.string.apps_customize_widgets_scroll_format;
                 count = mNumWidgetPages;
@@ -2059,6 +2111,9 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
             case Apps:
                 stringId = R.string.apps_customize_apps_scroll_format;
                 break;
+            //Pekalll LK add download page string resource
+            case DownLoad:
+            	stringId = R.string.apps_customize_download_scroll_format;
             case Widgets:
                 stringId = R.string.apps_customize_widgets_scroll_format;
                 break;

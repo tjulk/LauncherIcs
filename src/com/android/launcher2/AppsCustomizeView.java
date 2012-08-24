@@ -22,12 +22,16 @@ public interface AppsCustomizeView {
 
     public enum ContentType {
         Apps,
+        //Pekall LK add download content type
+        DownLoad,
         Widgets
     }
 
     public enum SortMode {
         Title,
-        InstallDate
+        InstallDate,
+        //Pekall LK add apps used frequency
+        Frequency
     }
 
     public void setup(Launcher launcher, DragController dragController);

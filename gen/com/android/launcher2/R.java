@@ -1177,6 +1177,7 @@ containing a value of this type.
         /**  The format string for AppsCustomize Apps page scroll text [CHAR_LIMIT=none] 
          */
         public static final int apps_customize_apps_scroll_format=0x7f090050;
+        public static final int apps_customize_download_scroll_format=0x7f0900a7;
         /**  The format string for AppsCustomize Apps page scroll text [CHAR_LIMIT=none] 
          */
         public static final int apps_customize_widgets_scroll_format=0x7f090051;
@@ -1248,6 +1249,9 @@ containing a value of this type.
          icon/widget from the home screen, but not permanently. [CHAR_LIMIT=30] 
          */
         public static final int delete_zone_label_workspace=0x7f090025;
+        /**  DownLoad tab 
+         */
+        public static final int download_apps_button_label=0x7f0900a6;
         /**  Title of the Android Dreams (screensaver) module 
          */
         public static final int dream_name=0x7f09004c;

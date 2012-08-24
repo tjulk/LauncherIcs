@@ -182,4 +182,8 @@
     <!-- General -->
     <string name="preferences_interface_general_title">常规</string>
     <string name="preferences_interface_general_orientation_title">自动旋转屏幕</string>
+    
+    <!-- DownLoad tab -->
+    <string name="download_apps_button_label">下载</string>
+    <string name="apps_customize_download_scroll_format">"下载应用：第 %1$d 页，共 %2$d 页"</string>
 </resources>

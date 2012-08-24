@@ -29,6 +29,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -38,6 +39,7 @@ import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.launcher2.preference.PreferencesProvider;
 import com.android.launcher2.R;
@@ -46,10 +48,14 @@ import java.util.ArrayList;
 
 public class AppsCustomizeTabHost extends TabHost implements LauncherTransitionable,
         TabHost.OnTabChangeListener {
+	private static final boolean DEBUG = true;
     static final String LOG_TAG = "AppsCustomizeTabHost";
 
     private static final String APPS_TAB_TAG = "APPS";
+    //Pekall LK add download tab tag
+    private static final String DOWNLOAD_TAB_TAG = "DOWNLOAD";
     private static final String WIDGETS_TAB_TAG = "WIDGETS";
+    
 
     private final LayoutInflater mLayoutInflater;
     private ViewGroup mTabs;
@@ -102,10 +108,16 @@ public class AppsCustomizeTabHost extends TabHost implements LauncherTransitiona
         setContentTypeImmediate(AppsCustomizeView.ContentType.Apps);
         setCurrentTabByTag(APPS_TAB_TAG);
     }
+    
+    //Pekall LK add select DownloadAppsTab
+    void selectDownloadAppsTab() {
+        setContentTypeImmediate(AppsCustomizeView.ContentType.DownLoad);
+        setCurrentTabByTag(DOWNLOAD_TAB_TAG);
+    }
+    
     void selectWidgetsTab() {
         setContentTypeImmediate(AppsCustomizeView.ContentType.Widgets);
         mAppsCustomizePane.setCurrentToWidgets();
-
         setCurrentTabByTag(WIDGETS_TAB_TAG);
     }
 
@@ -146,10 +158,25 @@ public class AppsCustomizeTabHost extends TabHost implements LauncherTransitiona
         tabView.setOnLongClickListener(new View.OnLongClickListener() {
                 public boolean onLongClick(View v) {
                     mLauncher.onLongClickAppsTab(v);
+                    Toast.makeText(mLauncher, "all_apps_button_label is clicked", Toast.LENGTH_SHORT).show();
                     return true;
                 }
         });
         addTab(newTabSpec(APPS_TAB_TAG).setIndicator(tabView).setContent(contentFactory));
+        
+        //Pekall LK add download tab
+        label = mContext.getString(R.string.download_apps_button_label);
+        tabView = (TextView) mLayoutInflater.inflate(R.layout.tab_widget_indicator, tabs, false);
+        tabView.setText(label);
+        tabView.setContentDescription(label);
+        tabView.setOnLongClickListener(new View.OnLongClickListener() {
+            public boolean onLongClick(View v) {
+                mLauncher.onLongClickAppsTab(v);
+                Toast.makeText(mLauncher, "download_apps_button_label is clicked", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+        addTab(newTabSpec(DOWNLOAD_TAB_TAG).setIndicator(tabView).setContent(contentFactory));
         
         label = mContext.getString(R.string.widgets_tab_label);
         tabView = (TextView) mLayoutInflater.inflate(R.layout.tab_widget_indicator, tabs, false);
@@ -208,6 +235,8 @@ public class AppsCustomizeTabHost extends TabHost implements LauncherTransitiona
     @Override
     public void onTabChanged(String tabId) {
         final AppsCustomizeView.ContentType type = getContentTypeForTabTag(tabId);
+        if(DEBUG) Log.d(LOG_TAG, "tab is change to "+tabId);
+        
         if (mSuppressContentCallback) {
             mSuppressContentCallback = false;
             return;
@@ -228,6 +257,8 @@ public class AppsCustomizeTabHost extends TabHost implements LauncherTransitiona
     public AppsCustomizeView.ContentType getContentTypeForTabTag(String tag) {
         if (tag.equals(APPS_TAB_TAG)) {
             return AppsCustomizeView.ContentType.Apps;
+        } else if (tag.equals(DOWNLOAD_TAB_TAG)) {
+            return AppsCustomizeView.ContentType.DownLoad;
         } else if (tag.equals(WIDGETS_TAB_TAG)) {
             return AppsCustomizeView.ContentType.Widgets;
         }
@@ -240,6 +271,8 @@ public class AppsCustomizeTabHost extends TabHost implements LauncherTransitiona
     public String getTabTagForContentType(AppsCustomizeView.ContentType type) {
         if (type == AppsCustomizeView.ContentType.Apps) {
             return APPS_TAB_TAG;
+        } else if (type == AppsCustomizeView.ContentType.DownLoad) {
+        	return DOWNLOAD_TAB_TAG;
         } else if (type == AppsCustomizeView.ContentType.Widgets) {
             return WIDGETS_TAB_TAG;
         }
