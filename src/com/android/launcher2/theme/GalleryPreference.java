@@ -99,7 +99,6 @@ public class GalleryPreference extends Preference implements
 		if (state != null) {
 			dialog.onRestoreInstanceState(state);
 		}
-
 		dialog.show();
 	}
 

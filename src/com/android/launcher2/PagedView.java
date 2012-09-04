@@ -1356,6 +1356,8 @@ public abstract class PagedView extends ViewGroup {
     protected int getChildWidth(int index) {
         // This functions are called enough times that it actually makes a difference in the
         // profiler -- so just inline the max() here
+    	if (getPageAt(index) == null)
+    		return mMinimumWidth;
         final int measuredWidth = getPageAt(index).getMeasuredWidth();
         final int minWidth = mMinimumWidth;
         return (minWidth > measuredWidth) ? minWidth : measuredWidth;

@@ -118,9 +118,12 @@ public class ApplicationInfo extends ItemInfo {
     }
 
     @Override
-    public String toString() {
-        return "ApplicationInfo(title=" + title.toString() + ")";
-    }
+	public String toString() {
+		return "ApplicationInfo [title=" + title + ", intent=" + intent
+				+ ", iconBitmap=" + iconBitmap + ", firstInstallTime="
+				+ firstInstallTime + ", componentName=" + componentName
+				+ ", flags=" + flags + "]";
+	}
 
     public static void dumpApplicationInfoList(String tag, String label,
             ArrayList<ApplicationInfo> list) {

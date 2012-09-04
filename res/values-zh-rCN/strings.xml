@@ -114,15 +114,15 @@
     <!--             -->
     <!-- Preferences -->
     <!--             -->
-    <string name="preferences_title">启动器选项</string>
+    <string name="preferences_title">京联云桌面</string>
     <!-- UI -->
-    <string name="preferences_interface_title">界面</string>
+    <string name="preferences_interface_title">界面设置</string>
     <!-- Application -->
-    <string name="preferences_application_title">应用</string>
+    <string name="preferences_application_title">应用设置</string>
 
     <!-- UI -->
     <!-- Homescreen -->
-    <string name="preferences_interface_homescreen_title">主屏幕</string>
+    <string name="preferences_interface_homescreen_title">主屏幕设置</string>
     <string name="preferences_interface_homescreen_general_category">常规</string>
     <string name="preferences_interface_homescreen_general_screens_title">主屏幕数量</string>
     <string name="preferences_interface_homescreen_general_screens_summary">主屏幕上的页面数量</string>
@@ -158,7 +158,7 @@
     <string name="preferences_interface_homescreen_indicator_background_summary">显示指示器后面的背景</string>
 
     <!-- Drawer -->
-    <string name="preferences_interface_drawer_title">抽屉</string>
+    <string name="preferences_interface_drawer_title">抽屉设置</string>
     <string name="preferences_interface_drawer_widgets_category">小部件</string>
     <string name="preferences_interface_drawer_widgets_join_apps_title">与应用程序关联</string>
     <string name="preferences_interface_drawer_widgets_join_apps_summary">从应用程序菜单直接滑动到小部件菜单</string>
@@ -180,7 +180,7 @@
     <string name="preferences_interface_icons_title">图标</string>
 
     <!-- General -->
-    <string name="preferences_interface_general_title">常规</string>
+    <string name="preferences_interface_general_title">常规设置</string>
     <string name="preferences_interface_general_orientation_title">自动旋转屏幕</string>
     
     <!-- DownLoad tab -->
