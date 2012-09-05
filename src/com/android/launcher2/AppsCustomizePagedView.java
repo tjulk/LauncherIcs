@@ -364,24 +364,25 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
                     }
                 } 
                 //Pekall LK 
-                else if (currentPage > mNumAppsPages && currentPage< (mNumAppsPages + mNumDownloadAppsPages)) {
+                else if (currentPage >= mNumAppsPages && currentPage< (mNumAppsPages + mNumDownloadAppsPages)) {
                 	//TODO
+                	int numApps = mApps.size();
                     PagedViewCellLayout layout = (PagedViewCellLayout) getPageAt(currentPage);
                     PagedViewCellLayoutChildren childrenLayout = layout.getChildrenLayout();
                     int numItemsPerPage = mCellCountX * mCellCountY;
                     int childCount = childrenLayout.getChildCount();
                     if (childCount > 0) {
-                        i = (currentPage * numItemsPerPage) + (childCount / 2);
+                        i = numApps + ((currentPage - mNumAppsPages) * numItemsPerPage) + (childCount / 2);
                     }
                 	//TODO
                 }
                 else {
-                    int numApps = mApps.size();
+                    int numAppsAndDownload = mApps.size() + mDownloadApps.size();
                     PagedViewGridLayout layout = (PagedViewGridLayout) getPageAt(currentPage);
                     int numItemsPerPage = mWidgetCountX * mWidgetCountY;
                     int childCount = layout.getChildCount();
                     if (childCount > 0) {
-                        i = numApps + ((currentPage - mNumAppsPages - mNumDownloadAppsPages) * numItemsPerPage) + (childCount / 2);
+                        i = numAppsAndDownload + ((currentPage - mNumAppsPages - mNumDownloadAppsPages) * numItemsPerPage) + (childCount / 2);
                     }
                 }
             } else {
@@ -414,8 +415,8 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
                        i = (currentPage * numItemsPerPage) + (childCount / 2);
                     }
                 	//TODO
-                	break;
                 	}
+                	break;
                 }
             }
         }
@@ -445,9 +446,9 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
                 return (index / numItemsPerPage);
             } 
             //Pekall LK
-            else if (index > mApps.size() && index < (mDownloadApps.size() + mApps.size())) {
+            else if (index >= mApps.size() && index < (mDownloadApps.size() + mApps.size())) {
                 int numItemsPerPage = mCellCountX * mCellCountY;
-                return (index / numItemsPerPage);
+                return mNumAppsPages + ((index - mApps.size()) / numItemsPerPage);
             }
             else {
                 int numItemsPerPage = mWidgetCountX * mWidgetCountY;
@@ -851,6 +852,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
     protected void snapToPage(int whichPage, int delta, int duration) {
         super.snapToPage(whichPage, delta, duration);
 
+        Log.d(LOG_TAG, "snap tp page");
         if (mJoinWidgetsApps) {
             updateCurrentTab(whichPage);
         }
@@ -1089,7 +1091,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
         int startIndex = page * numCells;
         //
         int endIndex = Math.min(startIndex + numCells, mDownloadApps.size());
-        PagedViewCellLayout layout = (PagedViewCellLayout) getPageAt(page);
+        PagedViewCellLayout layout = (PagedViewCellLayout) getPageAt(page + mNumAppsPages);
 
         layout.removeAllViewsOnPage();
         for (int i = startIndex; i < endIndex; ++i) {
@@ -1642,6 +1644,11 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
                 addView(layout, new PagedViewGridLayout.LayoutParams(LayoutParams.MATCH_PARENT,
                         LayoutParams.MATCH_PARENT));
             }
+            for (int k = 0; k < mNumDownloadAppsPages; ++k) {
+            	PagedViewCellLayout layout = new PagedViewCellLayout(context);
+            	setupPage(layout);
+            	addView(layout);
+            }
 
             for (int i = 0; i < mNumAppsPages; ++i) {
                 PagedViewCellLayout layout = new PagedViewCellLayout(context);
@@ -1649,11 +1656,6 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
                 addView(layout);
             }
             
-            for (int k = 0; k < mNumDownloadAppsPages; ++k) {
-                PagedViewCellLayout layout = new PagedViewCellLayout(context);
-                setupPage(layout);
-                addView(layout);
-            }
             
         } else {
             switch (mContentType) {
@@ -1665,16 +1667,21 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
                 break;
             case DownLoad:
             	syncDownLoadPages();
+            	break;
             }
         }
     }
 
     @Override
     public void syncPageItems(int page, boolean immediate) {
+    	Log.d(LOG_TAG, "syncPageItems syncDownloadPageItems1:" + (page));
+    	Log.d(LOG_TAG, "syncPageItems syncDownloadPageItems2:" + (page - mNumAppsPages));
+    	Log.d(LOG_TAG, "syncPageItems syncDownloadPageItems3:" + (page - mNumAppsPages - mNumDownloadAppsPages));
         if (mJoinWidgetsApps) {
             if (page < mNumAppsPages) {
                 syncAppsPageItems(page, immediate);
-            } else if (page >= mNumAppsPages && page < mNumAppsPages + mNumDownloadAppsPages) {
+            } else if (page >= mNumAppsPages && page < (mNumAppsPages + mNumDownloadAppsPages)) {
+            	Log.d(LOG_TAG, "syncPageItems syncDownloadPageItems22:" + (page - mNumAppsPages));
             	syncDownloadPageItems(page - mNumAppsPages, immediate);
             } else {
                 syncWidgetPageItems(page - mNumAppsPages - mNumDownloadAppsPages, immediate);
@@ -2052,9 +2059,17 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
             if (index < 0) {
                 mApps.add(-(index + 1), info);
             }
+            
             //Pekall LK
-        	if (info.flags == 1) {
-        		mDownloadApps.add(info);
+            if (mSortMode == SortMode.Title) {
+                index = Collections.binarySearch(mDownloadApps, info, LauncherModel.APP_NAME_COMPARATOR);
+            } else if (mSortMode == SortMode.InstallDate) {
+                index = Collections.binarySearch(mDownloadApps, info, LauncherModel.APP_INSTALL_TIME_COMPARATOR);
+            }
+            
+            //Pekall LK
+        	if (index < 0 && info.flags == 1) {
+        		mDownloadApps.add(-(index + 1), info);
         		Log.d(LOG_TAG, "mDownloadApps:"+info.toString());	
         	}
             
@@ -2114,8 +2129,11 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
     @Override
     public void reset() {
         if (mJoinWidgetsApps) {
+        	
+        	
             AppsCustomizeTabHost tabHost = getTabHost();
             String tag = tabHost.getCurrentTabTag();
+            Log.d(LOG_TAG, "reset the app host" + tag);
             if (tag != null) {
                 if (!tag.equals(tabHost.getTabTagForContentType(ContentType.Apps))) {
                     tabHost.setCurrentTabFromContent(ContentType.Apps);
@@ -2210,7 +2228,8 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
                 count = mNumAppsPages;
             } 
             //Pekall LK 
-            else if (page > mNumAppsPages && page < (mNumAppsPages + mNumDownloadAppsPages)) {
+            else if (page >= mNumAppsPages && page < (mNumAppsPages + mNumDownloadAppsPages)) {
+            	page -= mNumAppsPages;
                 stringId = R.string.apps_customize_download_scroll_format;
                 count = mNumDownloadAppsPages;
             }
@@ -2230,6 +2249,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
             //Pekalll LK add download page string resource
             case DownLoad:
             	stringId = R.string.apps_customize_download_scroll_format;
+            	break;
             case Widgets:
                 stringId = R.string.apps_customize_widgets_scroll_format;
                 break;
