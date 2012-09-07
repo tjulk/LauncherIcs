@@ -70,6 +70,8 @@ public class AppsCustomizeTabHost extends TabHost implements LauncherTransitiona
     private boolean mInTransition;
     private boolean mResetAfterTransition;
     private Animator mLauncherTransition;
+    
+    private boolean mIsSetAppsBackgroundAsWallPaper;
 
     // Preferences
     private boolean mFadeScrollingIndicator;
@@ -83,8 +85,11 @@ public class AppsCustomizeTabHost extends TabHost implements LauncherTransitiona
         // Preferences
         mFadeScrollingIndicator = PreferencesProvider.Interface.Drawer.Indicator.getFadeScrollingIndicator(context);
         
+        mIsSetAppsBackgroundAsWallPaper = PreferencesProvider.Interface.General.isSetAppsBackgroundAsWallPaper(context);
+        
         //Pekall LK  set app list background ,now we get the wallpaper to set it , TODO config.
-        setBackgroundAsWallPaper(context);
+        if (mIsSetAppsBackgroundAsWallPaper)
+        	setBackgroundAsWallPaper(context);
     }
     
     private void setBackgroundAsWallPaper(Context context) {
@@ -154,6 +159,7 @@ public class AppsCustomizeTabHost extends TabHost implements LauncherTransitiona
         label = mContext.getString(R.string.all_apps_button_label);
         tabView = (TextView) mLayoutInflater.inflate(R.layout.tab_widget_indicator, tabs, false);
         tabView.setText(label);
+        tabView.setTextSize(14);
         tabView.setContentDescription(label);
         tabView.setOnLongClickListener(new View.OnLongClickListener() {
                 public boolean onLongClick(View v) {
@@ -168,6 +174,7 @@ public class AppsCustomizeTabHost extends TabHost implements LauncherTransitiona
         label = mContext.getString(R.string.download_apps_button_label);
         tabView = (TextView) mLayoutInflater.inflate(R.layout.tab_widget_indicator, tabs, false);
         tabView.setText(label);
+        tabView.setTextSize(14);
         tabView.setContentDescription(label);
         tabView.setOnLongClickListener(new View.OnLongClickListener() {
             public boolean onLongClick(View v) {
@@ -181,6 +188,7 @@ public class AppsCustomizeTabHost extends TabHost implements LauncherTransitiona
         label = mContext.getString(R.string.widgets_tab_label);
         tabView = (TextView) mLayoutInflater.inflate(R.layout.tab_widget_indicator, tabs, false);
         tabView.setText(label);
+        tabView.setTextSize(14);
         tabView.setContentDescription(label);
         addTab(newTabSpec(WIDGETS_TAB_TAG).setIndicator(tabView).setContent(contentFactory));
         setOnTabChangedListener(this);

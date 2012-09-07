@@ -1088,7 +1088,7 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
     public void syncDownloadPageItems(int page, boolean immediate) {
         // ensure that we have the right number of items on the pages
         int numCells = mCellCountX * mCellCountY;
-        int startIndex = page * numCells;
+        int startIndex = (page + mNumAppsPages) * numCells;
         //
         int endIndex = Math.min(startIndex + numCells, mDownloadApps.size());
         PagedViewCellLayout layout = (PagedViewCellLayout) getPageAt(page + mNumAppsPages);

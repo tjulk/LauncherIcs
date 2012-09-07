@@ -37,6 +37,7 @@ import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PaintDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.graphics.TableMaskFilter;
@@ -98,6 +99,7 @@ public final class Utilities {
     
     //Pekall LK
     private static Drawable[] sBackgrounds;
+    private static Drawable sSingleBackground;
     
     /**
      * Returns a bitmap suitable for the all apps view.
@@ -132,15 +134,16 @@ public final class Utilities {
 
             //Pekall LK
 			Drawable bg = null;
-			if (sHasBackgraound && sBackgrounds != null
-					&& sBackgrounds.length > 0) {
+			//if (sHasBackgraound && sBackgrounds != null && sBackgrounds.length > 0) {
+			if (sHasBackgraound && sSingleBackground != null) {
 	            //Pekall LK if app icon size is bigger than background , reset it
 	            if (sourceWidth>=width)
 	            	sourceWidth = (int)(width*(4f/5));
 	            if (sourceHeight>=height)
 	            	sourceHeight =(int)(height*(4f/5));	
 	            // && (width > sourceWidth || height > sourceHeight)) {
-				bg = sBackgrounds[sRandom.nextInt(sBackgrounds.length)];
+				//bg = sBackgrounds[sRandom.nextInt(sBackgrounds.length)];
+	            bg = sSingleBackground;
 				Log.d(TAG, "icon bg is not null");
 			} else {
 				bg = null;
@@ -193,6 +196,47 @@ public final class Utilities {
             return bitmap;
         }
     }
+    
+    
+    //Pekall LK 
+    public static Bitmap createAllAppButtonBitmap(Drawable icon, Context context) {
+        synchronized (sCanvas) {
+            int width = 100;
+            int height = 100;
+            int textureWidth = 135;
+            int textureHeight = 135;
+			Drawable bg = null;
+			//if (sHasBackgraound && sBackgrounds != null && sBackgrounds.length > 0) {
+			if (sHasBackgraound && sSingleBackground != null) {
+				bg = sSingleBackground;
+			} else {
+				bg = null;
+				return null;
+			}
+
+            final Bitmap bitmap = Bitmap.createBitmap(textureWidth, textureHeight,
+                    Bitmap.Config.ARGB_8888);
+            final Canvas canvas = sCanvas;
+            canvas.setBitmap(bitmap);
+            
+			if (bg != null) {
+				bg.setBounds(0, 0, textureWidth, textureHeight);
+				bg.draw(canvas);
+				Log.d(TAG, "icon bg is not null ,set bg it to canvas");
+			}  
+            
+            final int left = (textureWidth-width) / 2;
+            final int top = (textureHeight-height) / 2;
+
+            sOldBounds.set(icon.getBounds());
+            icon.setBounds(left, top, left+width, top+height);
+            icon.draw(canvas);
+            icon.setBounds(sOldBounds);
+            canvas.setBitmap(null);
+            return bitmap;
+        }
+    }
+    
 
     /**
      * Returns a Bitmap representing the thumbnail of the specified Bitmap.
@@ -250,6 +294,7 @@ public final class Utilities {
 		sHasBackgraound = ThemeSettings.getBoolean(context,
 				R.bool.config_icon_has_background);
 		sBackgrounds = loadIconBackground(context);
+		sSingleBackground = loadSingleIconBackground(context);
 		sRandom = new Random();
 		
         sIconWidth = sIconHeight = (int) (resources.getDimension(R.dimen.app_icon_size)*(sHasBackgraound?(5f / 4):1));
@@ -341,14 +386,12 @@ public final class Utilities {
 		return new BitmapDrawable(context.getResources(), bitmapWithReflection);
 	}
 	
-	//Pekall LK
+	//Pekall LK  TODO unused change the background method
 	private static Drawable[] loadIconBackground(Context context) {
 		String[] names = ThemeSettings.getStringArray(context,
 				R.array.ic_shortcut_background, null);
 
-		if (names == null
-				|| ThemeSettings.THEME_DEFAULT.equals(ThemeSettings
-						.getCurrentThemePackage())) {
+		if (names == null|| ThemeSettings.THEME_DEFAULT.equals(ThemeSettings.getCurrentThemePackage())) {
 			Resources res = context.getResources();
 			names = res.getStringArray(R.array.ic_shortcut_background);
 			Drawable[] ds = new Drawable[names.length];
@@ -382,6 +425,15 @@ public final class Utilities {
 				ds = drawables;
 			}
 			return ds;
+		}
+	}
+	
+	private static Drawable loadSingleIconBackground(Context context) {
+		if (ThemeSettings.THEME_DEFAULT.equals(ThemeSettings.getCurrentThemePackage())) {
+			Resources res = context.getResources();
+			return res.getDrawable(R.drawable.icon_background);
+		} else {
+			return ThemeSettings.getDrawable(context, R.drawable.icon_background);
 		}
 	}
 	

@@ -22,6 +22,9 @@ import com.android.launcher2.theme.ThemeSettings;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -106,7 +109,14 @@ public class Hotseat extends FrameLayout {
         
         //Pekall LK 
         //allAppsButton.setCompoundDrawablesWithIntrinsicBounds(null,context.getResources().getDrawable(R.drawable.all_apps_button_icon), null, null);
-        allAppsButton.setCompoundDrawablesWithIntrinsicBounds(null,ThemeSettings.getDrawable(context, R.drawable.all_apps_button_icon), null, null);
+        //Pekall setThe background icon
+        Drawable bm = ThemeSettings.getDrawable(context, R.drawable.all_apps_button_icon);
+        if (Utilities.createAllAppButtonBitmap(bm, context) != null)
+        	bm = new  BitmapDrawable(Utilities.createAllAppButtonBitmap(bm, context));
+        //Pekall Set the background? TODO
+        allAppsButton.setCompoundDrawablesWithIntrinsicBounds(null,bm, null, null);
+        //allAppsButton.setBackgroundDrawable(allAppsDrawable);
+        
         
         allAppsButton.setContentDescription(context.getString(R.string.all_apps_button_label));
         allAppsButton.setOnTouchListener(new View.OnTouchListener() {

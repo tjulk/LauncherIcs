@@ -166,6 +166,12 @@ public final class PreferencesProvider {
                 final SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, 0);
                 return preferences.getBoolean("is_first_launcher", true);
             }
+            
+            public static boolean isSetAppsBackgroundAsWallPaper(Context context) {
+                final SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, 0);
+                return preferences.getBoolean("is_set_apps_background_as_wallpaper", false);
+            }
+            
         	public static void clearFirstLaunchFlag(Context context) {
         		final SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, 0);
         		preferences.edit().putBoolean("is_first_launcher", false).commit();

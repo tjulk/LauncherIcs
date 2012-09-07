@@ -21,6 +21,7 @@ import java.util.HashMap;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -28,6 +29,7 @@ import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
+import android.util.Log;
 
 import com.android.launcher2.theme.ThemeSettings;
 
@@ -217,14 +219,24 @@ public class IconCache {
             if (entry.title == null) {
                 entry.title = info.activityInfo.name;
             }
-
-            //Pekall LK Theme icon set
-            Drawable d = info.activityInfo.loadIcon(mPackageManager);
-			Drawable d1 = ThemeSettings.getDrawable(mContext, componentName
-					.getClassName(), d);
             
-            //entry.icon = Utilities.createIconBitmap(getFullResIcon(info), mContext);
-			entry.icon = Utilities.createIconBitmap(d1, mContext);
+            //Pekall LK Theme icon set , set the application's icon as it's self icon
+            try {
+            	Drawable d ;
+            	int iconId = mPackageManager.getPackageInfo(componentName.getPackageName(), 0).applicationInfo.icon ;
+        		Resources appResources = mPackageManager.getResourcesForApplication(componentName.getPackageName());
+        		
+        		if (iconId != 0)
+        			d = appResources.getDrawable(iconId);
+        		else
+        			d = info.activityInfo.loadIcon(mPackageManager);
+         
+				Drawable d1 = ThemeSettings.getDrawable(mContext, componentName.getClassName(), d);
+				entry.icon = Utilities.createIconBitmap(d1, mContext);
+			} catch (NameNotFoundException e) {
+			}
+            //Pekall LK Theme icon set , set the application's icon as it's self icon
+            
         }
         return entry;
     }
