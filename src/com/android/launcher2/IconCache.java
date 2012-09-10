@@ -233,7 +233,10 @@ public class IconCache {
          
 				Drawable d1 = ThemeSettings.getDrawable(mContext, componentName.getClassName(), d);
 				entry.icon = Utilities.createIconBitmap(d1, mContext);
-			} catch (NameNotFoundException e) {
+			} catch (Exception e) {
+				Drawable	d = info.activityInfo.loadIcon(mPackageManager);
+				Drawable d1 = ThemeSettings.getDrawable(mContext, componentName.getClassName(), d);
+				entry.icon = Utilities.createIconBitmap(d1, mContext);
 			}
             //Pekall LK Theme icon set , set the application's icon as it's self icon
             

@@ -23,7 +23,6 @@ import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 
 class FastBitmapDrawable extends Drawable {
     private Bitmap mBitmap;
@@ -46,11 +45,8 @@ class FastBitmapDrawable extends Drawable {
     @Override
     public void draw(Canvas canvas) {
         final Rect r = getBounds();
-        
-        Log.d("FASTBIT", "==============="+mBitmap.toString() + r.left + "  " + r.top + "  " + mPaint.toString());
-        if (mBitmap == null)
-        	return ;
-        canvas.drawBitmap(mBitmap, r.left, r.top, mPaint);
+        if (mBitmap != null)
+        	canvas.drawBitmap(mBitmap, r.left, r.top, mPaint);
     }
 
     @Override
