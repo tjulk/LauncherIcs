@@ -1809,6 +1809,7 @@ public class Workspace extends PagedView
     *
     */
     public void onDragStartedWithItem(View v) {
+    	Log.d(TAG, "onDragStartedWithItem == ");
         final Canvas canvas = new Canvas();
 
         // We need to add extra padding to the bitmap to make room for the glow effect
@@ -2287,6 +2288,7 @@ public class Workspace extends PagedView
     }
 
     public void beginDragShared(View child, DragSource source) {
+    	Log.d(TAG, "beginDragShared == ");
         Resources r = getResources();
 
         // We need to add extra padding to the bitmap to make room for the glow effect

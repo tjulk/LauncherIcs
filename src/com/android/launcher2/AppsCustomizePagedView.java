@@ -61,6 +61,7 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.launcher2.DragController.DragListener;
 import com.android.launcher2.DropTarget.DragObject;
 import com.android.launcher2.preference.PreferencesProvider;
 import com.android.launcher2.theme.ThemeSettings;
@@ -180,7 +181,7 @@ class AppsCustomizeAsyncTask extends AsyncTask<AsyncTaskPageData, Void, AsyncTas
  * The Apps/Customize page that displays all the applications, widgets, and shortcuts.
  */
 public class AppsCustomizePagedView extends PagedViewWithDraggableItems implements
-        AppsCustomizeView, View.OnClickListener, View.OnKeyListener, DragSource {
+        AppsCustomizeView, View.OnClickListener, View.OnKeyListener, DragSource  ,DropTarget, DragScroller, DragListener{
     static final String LOG_TAG = "AppsCustomizePagedView";
 
     // Refs
@@ -374,7 +375,6 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
                     if (childCount > 0) {
                         i = numApps + ((currentPage - mNumAppsPages) * numItemsPerPage) + (childCount / 2);
                     }
-                	//TODO
                 }
                 else {
                     int numAppsAndDownload = mApps.size() + mDownloadApps.size();
@@ -687,6 +687,9 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
     }
 
     private void beginDraggingApplication(View v) {
+    	//Pekall LK set the view disable
+    	v.setVisibility(View.GONE);
+    	Log.d(LOG_TAG, "beginDraggingApplication == ");
         mLauncher.getWorkspace().onDragStartedWithItem(v);
         mLauncher.getWorkspace().beginDragShared(v, this);
     }
@@ -755,12 +758,13 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
 
         if (!super.beginDragging(v)) return false;
 
-        // Go into spring loaded mode (must happen before we startDrag())
-        mLauncher.enterSpringLoadedDragMode();
-
         if (v instanceof PagedViewIcon) {
             beginDraggingApplication(v);
-        } else if (v instanceof PagedViewWidget) {
+        }
+        else if (v instanceof PagedViewWidget) {
+            // Go into spring loaded mode (must happen before we startDrag())
+        	//Pekall LK  change the screen to workspace 
+            mLauncher.enterSpringLoadedDragMode();
             beginDraggingWidget(v);
         }
         return true;
@@ -2102,8 +2106,8 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
             }
             //Pekall LK 
             int removeIndexDownLoad = findAppByComponent(mDownloadApps, info);
-            if (removeIndex > -1) {
-            	mDownloadApps.remove(removeIndex);
+            if (removeIndexDownLoad > -1) {
+            	mDownloadApps.remove(removeIndexDownLoad);
             }
         }
         //Pekall LK 
@@ -2257,4 +2261,84 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
             return String.format(mContext.getString(stringId), page + 1, getChildCount());
         }
     }
+
+	@Override
+	public boolean onEnterScrollArea(int x, int y, int direction) {
+		// TODO Auto-generated method stub
+		
+		Log.d(LOG_TAG, "======== onEnterScrollArea");
+		
+		return false;
+	}
+
+	@Override
+	public boolean onExitScrollArea() {
+		// TODO Auto-generated method stub
+		Log.d(LOG_TAG, "======== onExitScrollArea");
+		return false;
+	}
+
+	@Override
+	public boolean isDropEnabled() {
+		// TODO Auto-generated method stub
+		Log.d(LOG_TAG, "======== isDropEnabled");
+		return false;
+	}
+
+	@Override
+	public void onDrop(DragObject dragObject) {
+		// TODO Auto-generated method stub
+		Log.d(LOG_TAG, "======== onDrop");
+	}
+
+	@Override
+	public void onDragEnter(DragObject dragObject) {
+		// TODO Auto-generated method stub
+		Log.d(LOG_TAG, "======== onDragEnter");
+	}
+
+	@Override
+	public void onDragOver(DragObject dragObject) {
+		// TODO Auto-generated method stub
+		Log.d(LOG_TAG, "======== onDragOver");
+	}
+
+	@Override
+	public void onDragExit(DragObject dragObject) {
+		// TODO Auto-generated method stub
+		Log.d(LOG_TAG, "======== onDragExit");
+	}
+
+	@Override
+	public com.android.launcher2.DropTarget getDropTargetDelegate(
+			DragObject dragObject) {
+		// TODO Auto-generated method stub
+		Log.d(LOG_TAG, "======== getDropTargetDelegate");
+		return null;
+	}
+
+	@Override
+	public boolean acceptDrop(DragObject dragObject) {
+		// TODO Auto-generated method stub
+		Log.d(LOG_TAG, "======== acceptDrop");
+		return false;
+	}
+
+	@Override
+	public void getLocationInDragLayer(int[] loc) {
+		// TODO Auto-generated method stub
+		Log.d(LOG_TAG, "======== getLocationInDragLayer");
+	}
+
+	@Override
+	public void onDragStart(DragSource source, Object info, int dragAction) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDragEnd() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -1649,15 +1649,15 @@ public final class Launcher extends Activity
                 getText(R.string.chooser_wallpaper));
         // NOTE: Adds a configure option to the chooser if the wallpaper supports it
         //       Removed in Eclair MR1
-//        WallpaperManager wm = (WallpaperManager)
-//                getSystemService(Context.WALLPAPER_SERVICE);
-//        WallpaperInfo wi = wm.getWallpaperInfo();
-//        if (wi != null && wi.getSettingsActivity() != null) {
-//            LabeledIntent li = new LabeledIntent(getPackageName(),
-//                    R.string.configure_wallpaper, 0);
-//            li.setClassName(wi.getPackageName(), wi.getSettingsActivity());
-//            chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] { li });
-//        }
+		//        WallpaperManager wm = (WallpaperManager)
+		//                getSystemService(Context.WALLPAPER_SERVICE);
+		//        WallpaperInfo wi = wm.getWallpaperInfo();
+		//        if (wi != null && wi.getSettingsActivity() != null) {
+		//            LabeledIntent li = new LabeledIntent(getPackageName(),
+		//                    R.string.configure_wallpaper, 0);
+		//            li.setClassName(wi.getPackageName(), wi.getSettingsActivity());
+		//            chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] { li });
+		//        }
         startActivityForResult(chooser, REQUEST_PICK_WALLPAPER);
     }
 
